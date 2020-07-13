@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package projectakhirooprpl;
+package projectakhirooprpl.GUI;
 
 /**
  *
@@ -27,18 +27,46 @@ public class login extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTextField1 = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
+        nama_rs = new javax.swing.JLabel();
+        field_username = new javax.swing.JTextField();
+        field_pass = new javax.swing.JTextField();
+        btn_login = new javax.swing.JButton();
+        background_login = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 360, 230, 30));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Web 1920 – 2.png"))); // NOI18N
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        nama_rs.setFont(new java.awt.Font("Dialog", 1, 48)); // NOI18N
+        nama_rs.setForeground(new java.awt.Color(112, 112, 112));
+        nama_rs.setText("Rumah Sakit Al-Boromeous");
+        getContentPane().add(nama_rs, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 30, -1, -1));
+
+        field_username.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        getContentPane().add(field_username, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 340, 230, 30));
+
+        field_pass.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        getContentPane().add(field_pass, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 420, 230, 30));
+
+        btn_login.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/Component 1 – 1.png"))); // NOI18N
+        btn_login.setBorder(null);
+        btn_login.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_login.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_loginActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btn_login, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 540, -1, -1));
+
+        background_login.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/Web 1920 – 2.png"))); // NOI18N
+        getContentPane().add(background_login, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1440, 880));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btn_loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_loginActionPerformed
+        dispose();
+        new login2().setVisible(true);
+    }//GEN-LAST:event_btn_loginActionPerformed
 
     /**
      * @param args the command line arguments
@@ -76,7 +104,10 @@ public class login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JLabel background_login;
+    private javax.swing.JButton btn_login;
+    private javax.swing.JTextField field_pass;
+    private javax.swing.JTextField field_username;
+    private javax.swing.JLabel nama_rs;
     // End of variables declaration//GEN-END:variables
 }
