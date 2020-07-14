@@ -2,7 +2,7 @@ package com;
 public class Pekerja {
     int id_pekerja, gaji_pokok;
     String password,nama,posisi,gender_pkrj,ttl_pkrj,alamat_tinggal;
-    Unit id_unit;
+    Unit unit;
 
     public Pekerja() {
     }
@@ -16,7 +16,7 @@ public class Pekerja {
         this.gender_pkrj = gender_pkrj;
         this.ttl_pkrj = ttl_pkrj;
         this.alamat_tinggal = alamat_tinggal;
-        this.id_unit = id_unit;
+        this.unit = id_unit;
     }
 
     public int getId_pekerja() {
@@ -83,17 +83,17 @@ public class Pekerja {
         this.alamat_tinggal = alamat_tinggal;
     }
 
-    public Unit getId_unit() {
-        return id_unit;
+    public Unit getUnit() {
+        return unit;
     }
 
-    public void setId_unit(Unit id_unit) {
-        this.id_unit = id_unit;
+    public void setUnit(Unit id_unit) {
+        this.unit = id_unit;
     }
 
     @Override
     public String toString() {
-        return "Pekerja{" + "id_pekerja=" + id_pekerja + ", gaji_pokok=" + gaji_pokok + ", password=" + password + ", nama=" + nama + ", posisi=" + posisi + ", gender_pkrj=" + gender_pkrj + ", ttl_pkrj=" + ttl_pkrj + ", alamat_tinggal=" + alamat_tinggal + ", id_unit=" + id_unit + '}';
+        return "Pekerja{" + "id_pekerja=" + id_pekerja + ", gaji_pokok=" + gaji_pokok + ", password=" + password + ", nama=" + nama + ", posisi=" + posisi + ", gender_pkrj=" + gender_pkrj + ", ttl_pkrj=" + ttl_pkrj + ", alamat_tinggal=" + alamat_tinggal + ", id_unit=" + unit + '}';
     }
 
     

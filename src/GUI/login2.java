@@ -3,19 +3,54 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package projectakhirooprpl.GUI;
+package GUI;
+
+import com.Pekerja;
+import exec.ExecutePekerja;
+import java.util.Calendar;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author fadil
  */
 public class login2 extends javax.swing.JFrame {
-
+    private static Pekerja dkt,prt1,prt2;
+    private static ExecutePekerja execPkj;
     /**
      * Creates new form login2
+     * @param dokter
      */
-    public login2() {
+    
+    public login2(Pekerja dokter) {
         initComponents();
+        dkt = dokter;     
+        set();
+    }
+
+    private login2() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    private void set() {
+       String[] nama = dkt.getNama().split(" ");
+       nama_dokter.setText("Dokter  : Dr." + nama[0] + " " + nama[1]);
+       
+       nama_klinik.setText(dkt.getUnit().getNama_unit());
+       
+        Calendar c = Calendar.getInstance();
+        int timeOfDay = c.get(Calendar.HOUR_OF_DAY);
+
+        if(timeOfDay >= 0 && timeOfDay < 11){
+            lbl_shift.setText("Shift   : Pagi");
+        }else if(timeOfDay >= 11 && timeOfDay < 3){
+            lbl_shift.setText("Shift   : Siang");        
+        }else if(timeOfDay >= 3 && timeOfDay < 18){
+            lbl_shift.setText("Shift   : Sore");       
+        }else if(timeOfDay >= 18 && timeOfDay < 24){
+            lbl_shift.setText("Shift   : Malam");
+        }
+       
     }
 
     /**
@@ -37,10 +72,11 @@ public class login2 extends javax.swing.JFrame {
         field_idpasien = new javax.swing.JTextField();
         field_prwt1 = new javax.swing.JTextField();
         field_prwt2 = new javax.swing.JTextField();
+        lbl_perawat1 = new javax.swing.JLabel();
+        lbl_perawat2 = new javax.swing.JLabel();
         background_login2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1440, 870));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         nama_klinik.setFont(new java.awt.Font("Dialog", 1, 48)); // NOI18N
@@ -76,6 +112,11 @@ public class login2 extends javax.swing.JFrame {
         btn_set.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/Component 2 – 1.png"))); // NOI18N
         btn_set.setBorder(null);
         btn_set.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_set.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_setActionPerformed(evt);
+            }
+        });
         getContentPane().add(btn_set, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 780, -1, -1));
 
         field_idpasien.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
@@ -87,11 +128,44 @@ public class login2 extends javax.swing.JFrame {
         field_prwt2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         getContentPane().add(field_prwt2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 720, 230, 30));
 
+        lbl_perawat1.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
+        lbl_perawat1.setForeground(new java.awt.Color(112, 112, 112));
+        lbl_perawat1.setText("1. ABCDEFGHIJKL");
+        getContentPane().add(lbl_perawat1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1220, 70, 210, -1));
+
+        lbl_perawat2.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
+        lbl_perawat2.setForeground(new java.awt.Color(112, 112, 112));
+        lbl_perawat2.setText("2. LKJIHGFEDCBA");
+        getContentPane().add(lbl_perawat2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1220, 100, 210, -1));
+
         background_login2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/Web 1920 – 3.png"))); // NOI18N
         getContentPane().add(background_login2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1440, 880));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btn_setActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_setActionPerformed
+        execPkj = new ExecutePekerja();
+        
+        if (!(field_prwt1.getText().equals(""))) {
+            prt1 = execPkj.getPekerja(Integer.valueOf(field_prwt1.getText()));
+            if (prt1.getId_pekerja() != 0  && prt1.getPosisi().equals("Perawat") ){
+                String[] sprt1 = prt1.getNama().split(" ");
+                lbl_perawat1.setText("1. " + sprt1[0] + " " + sprt1[1]);
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "Cek kembali ID Perawat 1!!");
+            lbl_perawat1.setText("-");
+        }
+//            if (prt1.getPosisi().equals("Perawat") & prt1.getId_pekerja() != 0 ) {
+//                String[] sprt1 = prt1.getNama().split(" ");
+//                lbl_perawat1.setText("1. " + sprt1[0] + " " + sprt1[1]);
+//            } else {
+//                JOptionPane.showMessageDialog(rootPane, "Cek kembali ID Perawat 1!!");
+//                lbl_perawat1.setText("-");
+//            }
+        }
+                
+    }//GEN-LAST:event_btn_setActionPerformed
 
     /**
      * @param args the command line arguments
@@ -136,6 +210,8 @@ public class login2 extends javax.swing.JFrame {
     private javax.swing.JTextField field_prwt1;
     private javax.swing.JTextField field_prwt2;
     private javax.swing.JLabel lbl_perawat;
+    private javax.swing.JLabel lbl_perawat1;
+    private javax.swing.JLabel lbl_perawat2;
     private javax.swing.JLabel lbl_shift;
     private javax.swing.JLabel nama_dokter;
     private javax.swing.JLabel nama_klinik;
