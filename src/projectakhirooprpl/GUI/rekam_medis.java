@@ -27,14 +27,74 @@ public class rekam_medis extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        nama_rs = new javax.swing.JLabel();
+        nama = new javax.swing.JLabel();
+        lbl_nama = new javax.swing.JLabel();
+        ttl = new javax.swing.JLabel();
+        lbl_ttl = new javax.swing.JLabel();
+        gender = new javax.swing.JLabel();
+        lbl_gender = new javax.swing.JLabel();
+        asuransi = new javax.swing.JLabel();
+        lbl_asuransi = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        background_remed = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setSize(new java.awt.Dimension(2147483647, 2147483647));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/Web 1920 – 10.png"))); // NOI18N
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        nama_rs.setFont(new java.awt.Font("Dialog", 1, 48)); // NOI18N
+        nama_rs.setForeground(new java.awt.Color(112, 112, 112));
+        nama_rs.setText("Rumah Sakit Al-Boromeous");
+        getContentPane().add(nama_rs, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 30, -1, -1));
+
+        nama.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
+        nama.setForeground(new java.awt.Color(112, 112, 112));
+        nama.setText("Nama Pasien   :");
+        getContentPane().add(nama, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 230, 160, -1));
+
+        lbl_nama.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
+        lbl_nama.setForeground(new java.awt.Color(112, 112, 112));
+        lbl_nama.setText("Jailangkung");
+        getContentPane().add(lbl_nama, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 230, 210, -1));
+
+        ttl.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
+        ttl.setForeground(new java.awt.Color(112, 112, 112));
+        ttl.setText("TTL           :");
+        getContentPane().add(ttl, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 310, 150, -1));
+
+        lbl_ttl.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
+        lbl_ttl.setForeground(new java.awt.Color(112, 112, 112));
+        lbl_ttl.setText("12/12/2012, Bandung");
+        getContentPane().add(lbl_ttl, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 450, 210, -1));
+
+        gender.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
+        gender.setForeground(new java.awt.Color(112, 112, 112));
+        gender.setText("Jenis Kelamin :");
+        getContentPane().add(gender, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 350, -1, -1));
+
+        lbl_gender.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
+        lbl_gender.setForeground(new java.awt.Color(112, 112, 112));
+        lbl_gender.setText("Laki-Perempuan");
+        getContentPane().add(lbl_gender, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 380, 210, -1));
+
+        asuransi.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
+        asuransi.setForeground(new java.awt.Color(112, 112, 112));
+        asuransi.setText("Asuransi      :");
+        getContentPane().add(asuransi, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 280, 150, -1));
+
+        lbl_asuransi.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
+        lbl_asuransi.setForeground(new java.awt.Color(112, 112, 112));
+        lbl_asuransi.setText("BPRSJ");
+        getContentPane().add(lbl_asuransi, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 280, 210, -1));
+
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/Component 13 – 1.png"))); // NOI18N
+        jButton1.setBorder(null);
+        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 880, -1, -1));
+
+        background_remed.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/Web 1920 – 10.png"))); // NOI18N
+        getContentPane().add(background_remed, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -75,6 +135,16 @@ public class rekam_medis extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel asuransi;
+    private javax.swing.JLabel background_remed;
+    private javax.swing.JLabel gender;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel lbl_asuransi;
+    private javax.swing.JLabel lbl_gender;
+    private javax.swing.JLabel lbl_nama;
+    private javax.swing.JLabel lbl_ttl;
+    private javax.swing.JLabel nama;
+    private javax.swing.JLabel nama_rs;
+    private javax.swing.JLabel ttl;
     // End of variables declaration//GEN-END:variables
 }
