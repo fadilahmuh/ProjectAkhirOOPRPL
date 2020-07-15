@@ -5,7 +5,14 @@
  */
 package GUI;
 
+import com.Obat;
+import com.Pasien;
+import com.Pekerja;
+import exec.ExecuteObat;
 import java.awt.Color;
+import java.util.List;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
@@ -14,14 +21,78 @@ import javax.swing.table.DefaultTableModel;
  * @author fadil
  */
 public class form_periksa extends javax.swing.JFrame {
+    private static Pekerja dokter,perawat1,perawat2;
+    private static Pasien pasien;
+    private static String sf;
+    private static ExecuteObat execObt;
+    
+    
+    
 
     /**
      * Creates new form form_periksa
+     * @param dkt
+     * @param prt1
+     * @param prt2
+     * @param shift
+     * @param psn
      */
-    public form_periksa() {
+    public form_periksa(Pekerja dkt, Pekerja prt1, Pekerja prt2, String shift, Pasien psn) {
         initComponents();
+        dokter = dkt;
+        perawat1 = prt1;
+        perawat2 = prt2;
+        pasien = psn;
+        sf = shift;
+        set();
+    }
+
+    private form_periksa() {
+        initComponents();
+        set_cbbobat();
+    }
+    
+    private void set() {
+        String[] nama = dokter.getNama().split(" ");
+        nama_dokter.setText("Dokter  : Dr." + nama[0] + " " + nama[1]);       
+        nama_klinik.setText(dokter.getUnit().getNama_unit());
         
+        lbl_shift.setText(sf);
+                
+        if (perawat1.getId_pekerja() != 0  && perawat1.getPosisi().equals("Perawat") ){
+            String[] sprt1 = perawat1.getNama().split(" ");
+            lbl_perawat1.setText("1. " + sprt1[0] + " " + sprt1[1]);
+        } else {
+            lbl_perawat1.setText("-");
+        }
+        if (perawat2.getId_pekerja() != 0  && perawat2.getPosisi().equals("Perawat") ){
+            String[] sprt2 = perawat2.getNama().split(" ");
+            lbl_perawat2.setText("2. " + sprt2[0] + " " + sprt2[1]);
+        } else {
+            lbl_perawat2.setText("-");
+        }
         
+        lbl_id.setText(String.valueOf(pasien.getId_pasien()));
+        lbl_nama.setText(pasien.getNama_pasien());
+        if (pasien.getGender_pasien().equals("L")) {
+            lbl_gender.setText("Laki-laki");
+        } else {
+            lbl_gender.setText("Perempuan");
+        }
+        
+        lbl_asuransi.setText(pasien.getAsuransi());      
+    }
+    
+    private void set_cbbobat() {
+        execObt = new ExecuteObat();
+        
+        List<Obat> listObt = execObt.getObat();
+        String[] listobt2 = new String[listObt.size()];
+        for (int i = 0; i < listobt2.length; i++) {
+            listobt2[i] = listObt.get(i).getNama_obat() + ", " + listObt.get(i).getId_obat();
+        }     
+        DefaultComboBoxModel model = new DefaultComboBoxModel(listobt2);
+        cbb_obat.setModel(model);  
     }
 
     /**
@@ -44,7 +115,7 @@ public class form_periksa extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         nama_klinik1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tabel_diagnosis = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
@@ -63,13 +134,13 @@ public class form_periksa extends javax.swing.JFrame {
         nama_klinik2 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        tabel_tindakan = new javax.swing.JTable();
         jComboBox1 = new javax.swing.JComboBox();
         jPanel3 = new javax.swing.JPanel();
         nama_klinik3 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
-        jComboBox2 = new javax.swing.JComboBox();
+        tabel_obat = new javax.swing.JTable();
+        cbb_obat = new javax.swing.JComboBox();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         background_periksa = new javax.swing.JLabel();
@@ -120,8 +191,8 @@ public class form_periksa extends javax.swing.JFrame {
         nama_klinik1.setForeground(new java.awt.Color(112, 112, 112));
         nama_klinik1.setText("Diagnosis");
 
-        jTable1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tabel_diagnosis.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        tabel_diagnosis.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null}
             },
@@ -129,19 +200,19 @@ public class form_periksa extends javax.swing.JFrame {
                 "Deskripsi", "Keterangan"
             }
         ));
-        jTable1.setFillsViewportHeight(true);
-        jTable1.setOpaque(false);
-        jTable1.setRowHeight(25);
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(1).setMinWidth(375);
-            jTable1.getColumnModel().getColumn(1).setMaxWidth(375);
+        tabel_diagnosis.setFillsViewportHeight(true);
+        tabel_diagnosis.setOpaque(false);
+        tabel_diagnosis.setRowHeight(25);
+        jScrollPane1.setViewportView(tabel_diagnosis);
+        if (tabel_diagnosis.getColumnModel().getColumnCount() > 0) {
+            tabel_diagnosis.getColumnModel().getColumn(1).setMinWidth(375);
+            tabel_diagnosis.getColumnModel().getColumn(1).setMaxWidth(375);
         }
-        jTable1.setBackground(new Color (0,0,0,0));
-        ((DefaultTableCellRenderer)jTable1.getDefaultRenderer(Object.class)).setBackground(new Color(254,254,254,1));
+        tabel_diagnosis.setBackground(new Color (0,0,0,0));
+        ((DefaultTableCellRenderer)tabel_diagnosis.getDefaultRenderer(Object.class)).setBackground(new Color(254,254,254,1));
         //jTable1.setGridColor (Color.WHITE);
         //jTable1.setForeground (Color.WHITE);
-        jTable1.setShowGrid(true);
+        tabel_diagnosis.setShowGrid(true);
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/Component 7 – 1.png"))); // NOI18N
         jButton1.setBorder(null);
@@ -320,8 +391,8 @@ public class form_periksa extends javax.swing.JFrame {
             }
         });
 
-        jTable2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tabel_tindakan.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        tabel_tindakan.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null}
             },
@@ -329,14 +400,17 @@ public class form_periksa extends javax.swing.JFrame {
                 "Deskripsi", "Keterangan"
             }
         ));
-        jTable2.setFillsViewportHeight(true);
-        jTable2.setOpaque(false);
-        jTable2.setRowHeight(25);
-        jScrollPane2.setViewportView(jTable2);
-        if (jTable2.getColumnModel().getColumnCount() > 0) {
-            jTable2.getColumnModel().getColumn(1).setMinWidth(375);
-            jTable2.getColumnModel().getColumn(1).setMaxWidth(375);
+        tabel_tindakan.setFillsViewportHeight(true);
+        tabel_tindakan.setOpaque(false);
+        tabel_tindakan.setRowHeight(25);
+        jScrollPane2.setViewportView(tabel_tindakan);
+        if (tabel_tindakan.getColumnModel().getColumnCount() > 0) {
+            tabel_tindakan.getColumnModel().getColumn(1).setMinWidth(375);
+            tabel_tindakan.getColumnModel().getColumn(1).setMaxWidth(375);
         }
+        tabel_tindakan.setBackground(new Color (0,0,0,0));
+        ((DefaultTableCellRenderer)tabel_tindakan.getDefaultRenderer(Object.class)).setBackground(new Color(254,254,254,1));
+        tabel_tindakan.setShowGrid(true);
 
         jComboBox1.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -372,9 +446,9 @@ public class form_periksa extends javax.swing.JFrame {
                 .addContainerGap(49, Short.MAX_VALUE))
         );
 
-        jScrollPane1.setBackground(new Color (0,0,0,0));
-        jScrollPane1.setOpaque(false);
-        jScrollPane1.getViewport().setOpaque(false);
+        jScrollPane2.setBackground(new Color (0,0,0,0));
+        jScrollPane2.setOpaque(false);
+        jScrollPane2.getViewport().setOpaque(false);
 
         jTabbedPane1.addTab("Tindakan", jPanel2);
 
@@ -384,8 +458,8 @@ public class form_periksa extends javax.swing.JFrame {
         nama_klinik3.setForeground(new java.awt.Color(112, 112, 112));
         nama_klinik3.setText("Daftar Obat");
 
-        jTable3.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+        tabel_obat.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        tabel_obat.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null}
             },
@@ -393,17 +467,25 @@ public class form_periksa extends javax.swing.JFrame {
                 "Deskripsi", "Keterangan"
             }
         ));
-        jTable3.setFillsViewportHeight(true);
-        jTable3.setOpaque(false);
-        jTable3.setRowHeight(25);
-        jScrollPane3.setViewportView(jTable3);
-        if (jTable3.getColumnModel().getColumnCount() > 0) {
-            jTable3.getColumnModel().getColumn(1).setMinWidth(375);
-            jTable3.getColumnModel().getColumn(1).setMaxWidth(375);
+        tabel_obat.setFillsViewportHeight(true);
+        tabel_obat.setOpaque(false);
+        tabel_obat.setRowHeight(25);
+        jScrollPane3.setViewportView(tabel_obat);
+        if (tabel_obat.getColumnModel().getColumnCount() > 0) {
+            tabel_obat.getColumnModel().getColumn(1).setMinWidth(375);
+            tabel_obat.getColumnModel().getColumn(1).setMaxWidth(375);
         }
+        tabel_obat.setBackground(new Color (0,0,0,0));
+        ((DefaultTableCellRenderer)tabel_obat.getDefaultRenderer(Object.class)).setBackground(new Color(254,254,254,1));
+        tabel_obat.setShowGrid(true);
 
-        jComboBox2.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbb_obat.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        cbb_obat.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbb_obat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbb_obatActionPerformed(evt);
+            }
+        });
 
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/Component 7 – 1.png"))); // NOI18N
         jButton5.setBorder(null);
@@ -420,7 +502,7 @@ public class form_periksa extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 571, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cbb_obat, javax.swing.GroupLayout.PREFERRED_SIZE, 571, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(121, 121, 121)
                 .addComponent(jButton5)
                 .addGap(292, 292, 292))
@@ -441,13 +523,13 @@ public class form_periksa extends javax.swing.JFrame {
                 .addGap(35, 35, 35)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jComboBox2))
+                    .addComponent(cbb_obat))
                 .addContainerGap(49, Short.MAX_VALUE))
         );
 
-        jScrollPane1.setBackground(new Color (0,0,0,0));
-        jScrollPane1.setOpaque(false);
-        jScrollPane1.getViewport().setOpaque(false);
+        jScrollPane3.setBackground(new Color (0,0,0,0));
+        jScrollPane3.setOpaque(false);
+        jScrollPane3.getViewport().setOpaque(false);
 
         jTabbedPane1.addTab("Obat", jPanel3);
 
@@ -466,15 +548,15 @@ public class form_periksa extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        DefaultTableModel model = (DefaultTableModel) tabel_diagnosis.getModel();
         model.addRow(new Object[]{} );
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        int a = jTable1.getRowCount();
+        int a = tabel_diagnosis.getRowCount();
         for (int i = 0; i < a; i++) {
-            System.out.println(jTable1.getValueAt(i, 0));
-            System.out.println(jTable1.getValueAt(i, 1));
+            System.out.println(tabel_diagnosis.getValueAt(i, 0));
+            System.out.println(tabel_diagnosis.getValueAt(i, 1));
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -483,8 +565,17 @@ public class form_periksa extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel) tabel_obat.getModel();
+        model.addRow(new Object[]{} );
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void cbb_obatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbb_obatActionPerformed
+        int row = tabel_obat.getRowCount();
+        
+//        String y = "test test";
+//        Object x = y;
+        tabel_obat.setValueAt(cbb_obat.getSelectedItem() , row - 1, 0);
+    }//GEN-LAST:event_cbb_obatActionPerformed
 
     /**
      * @param args the command line arguments
@@ -524,6 +615,7 @@ public class form_periksa extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel asuransi;
     private javax.swing.JLabel background_periksa;
+    private javax.swing.JComboBox cbb_obat;
     private javax.swing.JLabel gender;
     private javax.swing.JLabel id;
     private javax.swing.JButton jButton1;
@@ -533,7 +625,6 @@ public class form_periksa extends javax.swing.JFrame {
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JComboBox jComboBox1;
-    private javax.swing.JComboBox jComboBox2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -542,9 +633,6 @@ public class form_periksa extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
-    private javax.swing.JTable jTable3;
     private javax.swing.JLabel lbl_asuransi;
     private javax.swing.JLabel lbl_gender;
     private javax.swing.JLabel lbl_id;
@@ -561,6 +649,9 @@ public class form_periksa extends javax.swing.JFrame {
     private javax.swing.JLabel nama_klinik2;
     private javax.swing.JLabel nama_klinik3;
     private javax.swing.JLabel nama_rs;
+    private javax.swing.JTable tabel_diagnosis;
+    private javax.swing.JTable tabel_obat;
+    private javax.swing.JTable tabel_tindakan;
     private javax.swing.JLabel ttl;
     // End of variables declaration//GEN-END:variables
 }

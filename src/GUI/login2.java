@@ -5,7 +5,9 @@
  */
 package GUI;
 
+import com.Pasien;
 import com.Pekerja;
+import exec.ExecutePasien;
 import exec.ExecutePekerja;
 import java.util.Calendar;
 import javax.swing.JOptionPane;
@@ -17,6 +19,9 @@ import javax.swing.JOptionPane;
 public class login2 extends javax.swing.JFrame {
     private static Pekerja dkt,prt1,prt2;
     private static ExecutePekerja execPkj;
+    private static ExecutePasien execPsn;
+    private static Pasien psn;
+    private static String shift;
     /**
      * Creates new form login2
      * @param dokter
@@ -42,14 +47,17 @@ public class login2 extends javax.swing.JFrame {
         int timeOfDay = c.get(Calendar.HOUR_OF_DAY);
 
         if(timeOfDay >= 0 && timeOfDay < 11){
-            lbl_shift.setText("Shift   : Pagi");
-        }else if(timeOfDay >= 11 && timeOfDay < 3){
+            shift = "Shift   : Pagi";
+        }else if(timeOfDay >= 11 && timeOfDay < 15){
             lbl_shift.setText("Shift   : Siang");        
-        }else if(timeOfDay >= 3 && timeOfDay < 18){
-            lbl_shift.setText("Shift   : Sore");       
+            shift = "Shift   : Siang";
+        }else if(timeOfDay >= 15 && timeOfDay < 18){
+            shift = "Shift   : Sore";
         }else if(timeOfDay >= 18 && timeOfDay < 24){
-            lbl_shift.setText("Shift   : Malam");
+            shift = "Shift   : Malam";            
         }
+        lbl_shift.setText(shift);
+
        
     }
 
@@ -107,6 +115,11 @@ public class login2 extends javax.swing.JFrame {
         btn_next.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/Component 3 – 1.png"))); // NOI18N
         btn_next.setBorder(null);
         btn_next.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_next.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_nextActionPerformed(evt);
+            }
+        });
         getContentPane().add(btn_next, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 420, -1, -1));
 
         btn_set.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/Component 2 – 1.png"))); // NOI18N
@@ -130,12 +143,12 @@ public class login2 extends javax.swing.JFrame {
 
         lbl_perawat1.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
         lbl_perawat1.setForeground(new java.awt.Color(112, 112, 112));
-        lbl_perawat1.setText("1. ABCDEFGHIJKL");
+        lbl_perawat1.setText("-");
         getContentPane().add(lbl_perawat1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1220, 70, 210, -1));
 
         lbl_perawat2.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
         lbl_perawat2.setForeground(new java.awt.Color(112, 112, 112));
-        lbl_perawat2.setText("2. LKJIHGFEDCBA");
+        lbl_perawat2.setText("-");
         getContentPane().add(lbl_perawat2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1220, 100, 210, -1));
 
         background_login2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/Web 1920 – 3.png"))); // NOI18N
@@ -152,20 +165,40 @@ public class login2 extends javax.swing.JFrame {
             if (prt1.getId_pekerja() != 0  && prt1.getPosisi().equals("Perawat") ){
                 String[] sprt1 = prt1.getNama().split(" ");
                 lbl_perawat1.setText("1. " + sprt1[0] + " " + sprt1[1]);
-        } else {
-            JOptionPane.showMessageDialog(rootPane, "Cek kembali ID Perawat 1!!");
-            lbl_perawat1.setText("-");
+            } else {
+                JOptionPane.showMessageDialog(rootPane, "Cek kembali ID Perawat 1 !!");
+                lbl_perawat1.setText("-");
+            }
         }
-//            if (prt1.getPosisi().equals("Perawat") & prt1.getId_pekerja() != 0 ) {
-//                String[] sprt1 = prt1.getNama().split(" ");
-//                lbl_perawat1.setText("1. " + sprt1[0] + " " + sprt1[1]);
-//            } else {
-//                JOptionPane.showMessageDialog(rootPane, "Cek kembali ID Perawat 1!!");
-//                lbl_perawat1.setText("-");
-//            }
+        
+        if (!(field_prwt2.getText().equals(""))) {
+            prt2 = execPkj.getPekerja(Integer.valueOf(field_prwt2.getText()));
+            if (prt2.getId_pekerja() != 0  && prt2.getPosisi().equals("Perawat") ){
+                String[] sprt2 = prt2.getNama().split(" ");
+                lbl_perawat2.setText("2. " + sprt2[0] + " " + sprt2[1]);
+            } else {
+                JOptionPane.showMessageDialog(rootPane, "Cek kembali ID Perawat 2 !!");
+                lbl_perawat2.setText("-");
+            }
+        }else {
+            prt2 = new Pekerja();
+            lbl_perawat2.setText("-");
         }
+               
                 
     }//GEN-LAST:event_btn_setActionPerformed
+
+    private void btn_nextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_nextActionPerformed
+        execPsn = new ExecutePasien();
+        
+        psn = execPsn.getPasien(Integer.valueOf(field_idpasien.getText()));
+        if (psn.getId_pasien()!= 0){
+            this.setVisible(false);
+            new form_periksa(dkt, prt1, prt2, shift, psn).setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "Cek kembali ID Pasien !!");
+        }
+    }//GEN-LAST:event_btn_nextActionPerformed
 
     /**
      * @param args the command line arguments

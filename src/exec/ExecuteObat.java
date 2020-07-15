@@ -14,7 +14,7 @@ import java.util.logging.Logger;
 public class ExecuteObat {
     public List<Obat> getObat(){
         List<Obat> listObat = new ArrayList<>();
-        String query = "select * from obat";
+        String query = "select * from obat ORDER BY nama_obat";
         ConnectionManager conMan = new ConnectionManager();
         Connection conn = conMan.logOn();
         try {
