@@ -3,10 +3,10 @@ public class Pekerja {
     int id_pekerja, gaji_pokok;
     String password,nama,posisi,gender_pkrj,ttl_pkrj,alamat_tinggal;
     Unit unit;
-
+//contructor kosong
     public Pekerja() {
     }
-
+//constructor full
     public Pekerja(int id_pekerja, int gaji_pokok, String password, String nama, String posisi, String gender_pkrj, String ttl_pkrj, String alamat_tinggal, Unit id_unit) {
         this.id_pekerja = id_pekerja;
         this.gaji_pokok = gaji_pokok;
@@ -18,7 +18,7 @@ public class Pekerja {
         this.alamat_tinggal = alamat_tinggal;
         this.unit = id_unit;
     }
-
+//getter and setter
     public int getId_pekerja() {
         return id_pekerja;
     }
@@ -90,7 +90,7 @@ public class Pekerja {
     public void setUnit(Unit id_unit) {
         this.unit = id_unit;
     }
-
+//toString
     @Override
     public String toString() {
         return "Pekerja{" + "id_pekerja=" + id_pekerja + ", gaji_pokok=" + gaji_pokok + ", password=" + password + ", nama=" + nama + ", posisi=" + posisi + ", gender_pkrj=" + gender_pkrj + ", ttl_pkrj=" + ttl_pkrj + ", alamat_tinggal=" + alamat_tinggal + ", id_unit=" + unit + '}';
