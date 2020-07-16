@@ -5,6 +5,7 @@
  */
 package GUI;
 
+import exec.ExecuteRekamMedis;
 import java.awt.Color;
 
 /**
@@ -18,11 +19,34 @@ public class rekam_medis extends javax.swing.JFrame {
      */
     public rekam_medis() {
         initComponents();
+        setDataRekam();
         jScrollPane1.setOpaque(false);
         jScrollPane1.getViewport().setOpaque(false);
         jScrollPane1.setBorder(null);
         
         lbl_alamat.setBackground(new Color (0,0,0,0));
+    }
+    
+    private void setDataRekam(){
+        ExecuteRekamMedis er = new ExecuteRekamMedis();
+        String[][] dataRekam = er.Rekamtoobjek();
+        tabel_rekam.setModel(new javax.swing.table.DefaultTableModel(
+                dataRekam,
+//            new Object [][] {
+//                {null, null, null, null, null}
+//            },
+            new String [] {
+                "Tanggal", "Dokter", "Jenis", "Deskripsi", "Keterangan"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
     }
 
     /**

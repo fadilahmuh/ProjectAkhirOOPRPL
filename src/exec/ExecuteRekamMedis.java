@@ -66,30 +66,47 @@ public class ExecuteRekamMedis {
         return listRekam;
     }
     
-    public DefaultTableModel Bndtoobjek (List<RekamMedis> list) {        
-        DefaultTableModel model = new DefaultTableModel();
-        Object[] kolom = new Object[5];
-        
-        kolom[0]="Airport Code";
-        kolom[1]="Airport Names";
-        kolom[2]="City";
-        kolom[3]="Country";
-        kolom[4]="Time Zone";
-
-        
-        model.setColumnIdentifiers(kolom);
-        Object[] data = new Object[5];
-        for(Bandara bnd : list){
-            data[0]= bnd.getKd_bandara();
-            data[1]= bnd.getNama();
-            data[2]= bnd.getKota();
-            data[3]= bnd.getNegara();
-            data[4]= bnd.getUtc();            
-            model.addRow(data);
+    public String[][] Rekamtoobjek(){
+        List<RekamMedis> myRm = new ArrayList<RekamMedis>();
+        ExecuteRekamMedis eRm = new ExecuteRekamMedis();
+        myRm = eRm.getRekam(152018010);
+        String[][] dataRekam = new String[myRm.size()][5];
+        int i=0;
+        for(RekamMedis Rm : myRm){
+            dataRekam[i][0] = Rm.getTanggal();
+            dataRekam[i][1] = Rm.getPemeriksa().getNama();
+            dataRekam[i][2] = Rm.getJenis();
+            dataRekam[i][3] = Rm.getDeskripsi();
+            dataRekam[i][4] = Rm.getKeterangan();
+            i++;
         }
-        
-        return model;        
+        return dataRekam;
     }
+    
+//    public DefaultTableModel Rekamtoobjek (List<RekamMedis> list) {        
+//        DefaultTableModel model = new DefaultTableModel();
+//        Object[] kolom = new Object[5];
+//        
+//        kolom[0]="Airport Code";
+//        kolom[1]="Airport Names";
+//        kolom[2]="City";
+//        kolom[3]="Country";
+//        kolom[4]="Time Zone";
+//
+//        
+//        model.setColumnIdentifiers(kolom);
+//        Object[] data = new Object[5];
+//        for(Bandara bnd : list){
+//            data[0]= bnd.getKd_bandara();
+//            data[1]= bnd.getNama();
+//            data[2]= bnd.getKota();
+//            data[3]= bnd.getNegara();
+//            data[4]= bnd.getUtc();            
+//            model.addRow(data);
+//        }
+//        
+//        return model;        
+//    }
 //    public int insertsupplier(Supplier sp){
 //        int hasil = 0;
 //        String query = "Insert into supplier(id_supplier, nama, alamat, email, no_hp)"
