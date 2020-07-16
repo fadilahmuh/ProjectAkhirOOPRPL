@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS `obat` (
   PRIMARY KEY (`id_obat`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table rumahsakit.obat: ~8 rows (approximately)
+-- Dumping data for table rumahsakit.obat: ~7 rows (approximately)
 /*!40000 ALTER TABLE `obat` DISABLE KEYS */;
 INSERT INTO `obat` (`id_obat`, `nama_obat`, `harga_obat`) VALUES
 	('OB-M1', 'Paracetamol', 40000),
@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS `pasien` (
   PRIMARY KEY (`id_pasien`)
 ) ENGINE=InnoDB AUTO_INCREMENT=152018011 DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table rumahsakit.pasien: ~1 rows (approximately)
+-- Dumping data for table rumahsakit.pasien: ~0 rows (approximately)
 /*!40000 ALTER TABLE `pasien` DISABLE KEYS */;
 INSERT INTO `pasien` (`id_pasien`, `nama_pasien`, `gender_pasien`, `ttl_pasien`, `nik_pasien`, `asuransi`, `no_telp`, `alamat`) VALUES
 	(152018010, 'Rangga Bayuh', 'L', '00/00/0000, Mars', '321654983190909', 'BPJS', '08126345679', 'Mars setelah Bumi');
@@ -75,9 +75,9 @@ CREATE TABLE IF NOT EXISTS `pekerja` (
 -- Dumping data for table rumahsakit.pekerja: ~3 rows (approximately)
 /*!40000 ALTER TABLE `pekerja` DISABLE KEYS */;
 INSERT INTO `pekerja` (`id_pekerja`, `password`, `nama`, `posisi`, `gender_pkrj`, `ttl_pkrj`, `alamat_tinggal`, `gaji_pokok`, `unit_kerja`) VALUES
-	(152018002, 'fadil', 'Fannie M Fadilah S', 'Perawat', 'L', 'Bandung, 00/00/0000', 'asjkdnakjsndkajnsdjaksnd', 5000000, NULL),
-	(152018021, 'password', 'Earlangga Adalah Telingalangga', 'Dokter', 'L', 'Bandung, 04/07/2020', 'Disana jauh gaboleh ikut', 8000000, 1),
-	(152018024, '321654', 'M Nadhif', 'Perawat', 'L', 'Serang, 00/00/0000', 'Ujung kulon dunia', 5000000, NULL);
+	(152018002, 'fadil', 'Fannie M Fadilah S', 'Perawat', 'L', 'Bandung, 00/00/0000', 'Dihatimuu UWUUU', 5000000, NULL),
+	(152018020, '321', 'Earlangga Adalah Telingalangga', 'Dokter', 'L', 'Bandung, 04/07/2020', 'Disana jauh gaboleh ikut', 8000000, 1),
+	(152018023, '321654', 'M Nadhif', 'Perawat', 'L', 'Serang, 00/00/0000', 'Ujung kulon dunia', 5000000, NULL);
 /*!40000 ALTER TABLE `pekerja` ENABLE KEYS */;
 
 -- Dumping structure for table rumahsakit.rekam_medis
@@ -100,16 +100,20 @@ CREATE TABLE IF NOT EXISTS `rekam_medis` (
   CONSTRAINT `FK_rekam_medis_pasien` FOREIGN KEY (`id_pasien`) REFERENCES `pasien` (`id_pasien`) ON UPDATE CASCADE,
   CONSTRAINT `FK_rekam_medis_pekerja` FOREIGN KEY (`pemeriksa`) REFERENCES `pekerja` (`id_pekerja`) ON UPDATE CASCADE,
   CONSTRAINT `FK_rekam_medis_tindakan` FOREIGN KEY (`tindakan`) REFERENCES `tindakan` (`id_tindakan`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4;
 
 -- Dumping data for table rumahsakit.rekam_medis: ~5 rows (approximately)
 /*!40000 ALTER TABLE `rekam_medis` DISABLE KEYS */;
 INSERT INTO `rekam_medis` (`id_rekam`, `id_pasien`, `tanggal`, `jenis`, `deskripsi`, `keterangan`, `pemeriksa`, `obat`, `tindakan`) VALUES
-	(14, 152018010, '13/07/2020', 'Diagnosis', 'Nyeri sudah 3 hari', 'sudah minum obat tradisional', 152018021, NULL, NULL),
-	(15, 152018010, '15/07/2020', 'Diagnosis', 'Karang gigi', 'Graham kanan bawah', 152018021, NULL, NULL),
-	(16, 152018010, '15/07/2020', 'Diagnosis', 'Lubang gigi taring atas', 'harus tambal', 152018021, NULL, NULL),
-	(18, 152018010, '15/07/2020', 'Tindakan', NULL, '2 lubang', 152018021, NULL, 'TN-G1'),
-	(19, 152018010, '15/07/2020', 'Obat', NULL, 'Pereda nyeri, setiap sebelum makan', 152018021, 'OB-M4', NULL);
+	(14, 152018010, '13/07/2020', 'Diagnosis', 'Nyeri sudah 3 hari', 'sudah minum obat tradisional', 152018020, NULL, NULL),
+	(15, 152018010, '15/07/2020', 'Diagnosis', 'Karang gigi', 'Graham kanan bawah', 152018020, NULL, NULL),
+	(16, 152018010, '15/07/2020', 'Diagnosis', 'Lubang gigi taring atas', 'harus tambal', 152018020, NULL, NULL),
+	(18, 152018010, '15/07/2020', 'Tindakan', NULL, '2 lubang', 152018020, NULL, 'TN-G1'),
+	(19, 152018010, '15/07/2020', 'Obat', NULL, 'Pereda nyeri, setiap sebelum makan', 152018020, 'OB-M4', NULL),
+	(20, 152018010, '16/08/2020', 'Diagnosis', 'TikTok Syndrome', 'Harus operasi otak', 152018020, NULL, NULL),
+	(21, 152018010, '16/07/2020', 'Diagnosis', 'test desc diag', 'keterangan diag', 152018020, NULL, NULL),
+	(22, 152018010, '16/07/2020', 'Tindakan', NULL, 'semen biru', 152018020, NULL, 'TN-G1'),
+	(23, 152018010, '16/07/2020', 'Obat', NULL, '20mg, 3x sehari', 152018020, 'OB-M1', NULL);
 /*!40000 ALTER TABLE `rekam_medis` ENABLE KEYS */;
 
 -- Dumping structure for table rumahsakit.tindakan
