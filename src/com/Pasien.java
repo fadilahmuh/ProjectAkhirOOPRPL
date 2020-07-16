@@ -2,10 +2,10 @@ package com;
 public class Pasien {
     int id_pasien;
     String nama_pasien,gender_pasien,ttl_pasien,nik_pasien,asuransi, no_tlp, alamat;
-
+//constructor kosong
     public Pasien() {
     }
-
+//Constructor full
     public Pasien(int id_pasien, String nama_pasien, String gender_pasien, String ttl_pasien, String nik_pasien, String asuransi, String no_tlp, String alamat) {
         this.id_pasien = id_pasien;
         this.nama_pasien = nama_pasien;
@@ -16,7 +16,7 @@ public class Pasien {
         this.no_tlp = no_tlp;
         this.alamat = alamat;
     }
-
+//getter and setter
     public int getId_pasien() {
         return id_pasien;
     }
@@ -80,7 +80,7 @@ public class Pasien {
     public void setAlamat(String alamat) {
         this.alamat = alamat;
     }
-
+//toString
     @Override
     public String toString() {
         return "Pasien{" + "id_pasien=" + id_pasien + ", nama_pasien=" + nama_pasien + ", gender_pasien=" + gender_pasien + ", ttl_pasien=" + ttl_pasien + ", nik_pasien=" + nik_pasien + ", asuransi=" + asuransi + ", no_tlp=" + no_tlp + ", alamat=" + alamat + '}';
