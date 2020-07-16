@@ -3,13 +3,9 @@ public class RekamMedis {
     int id_rekam;
     String jenis,tanggal,keterangan,deskripsi;
     Pekerja pemeriksa;
-<<<<<<< HEAD
     Pasien pasien;
 
-=======
-    Pasien id_pasien;
 //contructor kosong
->>>>>>> 4df53bfa31a5d44792334a9d5f5d2ba1037dfc9a
     public RekamMedis() {
     }
 //constructor full
