@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS `obat` (
   PRIMARY KEY (`id_obat`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table rumahsakit.obat: ~7 rows (approximately)
+-- Dumping data for table rumahsakit.obat: ~8 rows (approximately)
 /*!40000 ALTER TABLE `obat` DISABLE KEYS */;
 INSERT INTO `obat` (`id_obat`, `nama_obat`, `harga_obat`) VALUES
 	('OB-M1', 'Paracetamol', 40000),
@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS `pasien` (
   PRIMARY KEY (`id_pasien`)
 ) ENGINE=InnoDB AUTO_INCREMENT=152018011 DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table rumahsakit.pasien: ~0 rows (approximately)
+-- Dumping data for table rumahsakit.pasien: ~1 rows (approximately)
 /*!40000 ALTER TABLE `pasien` DISABLE KEYS */;
 INSERT INTO `pasien` (`id_pasien`, `nama_pasien`, `gender_pasien`, `ttl_pasien`, `nik_pasien`, `asuransi`, `no_telp`, `alamat`) VALUES
 	(152018010, 'Rangga Bayuh', 'L', '00/00/0000, Mars', '321654983190909', 'BPJS', '08126345679', 'Mars setelah Bumi');
@@ -72,7 +72,7 @@ CREATE TABLE IF NOT EXISTS `pekerja` (
   CONSTRAINT `FK_pekerja_unit` FOREIGN KEY (`unit_kerja`) REFERENCES `unit` (`kd_unit`) ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=2147483649 DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table rumahsakit.pekerja: ~2 rows (approximately)
+-- Dumping data for table rumahsakit.pekerja: ~3 rows (approximately)
 /*!40000 ALTER TABLE `pekerja` DISABLE KEYS */;
 INSERT INTO `pekerja` (`id_pekerja`, `password`, `nama`, `posisi`, `gender_pkrj`, `ttl_pkrj`, `alamat_tinggal`, `gaji_pokok`, `unit_kerja`) VALUES
 	(152018002, 'fadil', 'Fannie M Fadilah S', 'Perawat', 'L', 'Bandung, 00/00/0000', 'asjkdnakjsndkajnsdjaksnd', 5000000, NULL),
@@ -102,7 +102,7 @@ CREATE TABLE IF NOT EXISTS `rekam_medis` (
   CONSTRAINT `FK_rekam_medis_tindakan` FOREIGN KEY (`tindakan`) REFERENCES `tindakan` (`id_tindakan`) ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table rumahsakit.rekam_medis: ~0 rows (approximately)
+-- Dumping data for table rumahsakit.rekam_medis: ~5 rows (approximately)
 /*!40000 ALTER TABLE `rekam_medis` DISABLE KEYS */;
 INSERT INTO `rekam_medis` (`id_rekam`, `id_pasien`, `tanggal`, `jenis`, `deskripsi`, `keterangan`, `pemeriksa`, `obat`, `tindakan`) VALUES
 	(14, 152018010, '13/07/2020', 'Diagnosis', 'Nyeri sudah 3 hari', 'sudah minum obat tradisional', 152018021, NULL, NULL),
@@ -123,7 +123,7 @@ CREATE TABLE IF NOT EXISTS `tindakan` (
   CONSTRAINT `FK_tindakan_unit` FOREIGN KEY (`unit_pengguna`) REFERENCES `unit` (`kd_unit`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table rumahsakit.tindakan: ~3 rows (approximately)
+-- Dumping data for table rumahsakit.tindakan: ~4 rows (approximately)
 /*!40000 ALTER TABLE `tindakan` DISABLE KEYS */;
 INSERT INTO `tindakan` (`id_tindakan`, `unit_pengguna`, `nama_tindakan`, `harga_tindakan`) VALUES
 	('TN-G1', 1, 'Tambal Gigi', 200000),
