@@ -3,7 +3,7 @@ public class RekamMedis {
     int id_rekam;
     String jenis,tanggal,keterangan,deskripsi;
     Pekerja pemeriksa;
-    Pasien id_pasien;
+    Pasien pasien;
 
     public RekamMedis() {
     }
@@ -15,7 +15,7 @@ public class RekamMedis {
         this.keterangan = keterangan;
         this.deskripsi = deskripsi;
         this.pemeriksa = pemeriksa;
-        this.id_pasien = id_pasien;
+        this.pasien = id_pasien;
     }
     
 
@@ -67,17 +67,17 @@ public class RekamMedis {
         this.pemeriksa = pemeriksa;
     }
 
-    public Pasien getId_pasien() {
-        return id_pasien;
+    public Pasien getPasien() {
+        return pasien;
     }
 
-    public void setId_pasien(Pasien id_pasien) {
-        this.id_pasien = id_pasien;
+    public void setPasien(Pasien id_pasien) {
+        this.pasien = id_pasien;
     }
 
     @Override
     public String toString() {
-        return "RekamMedis{" + "id_rekam=" + id_rekam  + ", jenis=" + jenis + ", tanggal=" + tanggal + ", keterangan=" + keterangan + ", deskripsi=" + deskripsi + ", pemeriksa=" + pemeriksa + ", id_pasien=" + id_pasien + '}';
+        return "RekamMedis{" + "id_rekam=" + id_rekam  + ", jenis=" + jenis + ", tanggal=" + tanggal + ", keterangan=" + keterangan + ", deskripsi=" + deskripsi + ", pemeriksa=" + pemeriksa + ", pasien=" + pasien + '}';
     }
     
     

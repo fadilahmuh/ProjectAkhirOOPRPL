@@ -38,7 +38,7 @@ public class ExecuteRekamMedis {
             while(rs.next()){
                 RekamMedis rm = new RekamMedis();
                 rm.setId_rekam(rs.getInt("id_rekam"));
-                rm.setId_pasien(ps);
+                rm.setPasien(ps);
                 rm.setTanggal(rs.getString("tanggal"));                
                 rm.setJenis(rs.getString("jenis"));
                 rm.setKeterangan(rs.getString("keterangan"));
@@ -83,20 +83,49 @@ public class ExecuteRekamMedis {
         return dataRekam;
     }
     
-    public int insertRekam(RekamMedis newRm){
+    public int insertRekam(List<RekamMedis> newRm){
         int hasil = 0;
-        String query = "Insert into rekam_medis(id_rekam, id_pasien, tanggal, jenis, deskripsi, keterangan, pemeriksa)"
-                + "value("+ newRm.getId_rekam()+","+ 
-                newRm.getId_pasien()+",'"+ newRm.getTanggal()+"','"+newRm.getJenis()+"','"+ newRm.getDeskripsi()+"','"+ newRm.getKeterangan()+"',"+ newRm.getPemeriksa()+")";
-        ConnectionManager conMan = new ConnectionManager();
-        Connection conn = conMan.logOn();
-        try {
-            Statement stm = conn.createStatement();
-            hasil = stm.executeUpdate(query);
-        } catch (SQLException ex) {
-            Logger.getLogger(ExecuteRekamMedis.class.getName()).log(Level.SEVERE, null, ex);
+        
+        for(RekamMedis rkm : newRm){
+            if (rkm.getJenis().equals("Diagnosis")) {
+                String query = "Insert into rekam_medis(id_pasien, tanggal, jenis, deskripsi, keterangan, pemeriksa)"
+                + "value("+ rkm.getPasien().getId_pasien()+",'"+ rkm.getTanggal()+"','"+rkm.getJenis()+"','"+ rkm.getDeskripsi()+"','"+ rkm.getKeterangan()+"',"+ rkm.getPemeriksa().getId_pekerja()+")";
+            ConnectionManager conMan = new ConnectionManager();
+            Connection conn = conMan.logOn();
+            try {
+                Statement stm = conn.createStatement();
+                hasil = stm.executeUpdate(query);
+            } catch (SQLException ex) {
+                Logger.getLogger(ExecuteRekamMedis.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            conMan.logOff();
+            } else if (rkm.getJenis().equals("Tindakan")) {
+                String query = "Insert into rekam_medis(id_pasien, tanggal, jenis, keterangan, pemeriksa, tindakan)"
+                + "value("+ rkm.getPasien().getId_pasien()+",'"+ rkm.getTanggal()+"','"+rkm.getJenis()+"','"+ rkm.getKeterangan()+"',"+ rkm.getPemeriksa().getId_pekerja()+",'"+ rkm.getDeskripsi()+"')";
+            ConnectionManager conMan = new ConnectionManager();
+            Connection conn = conMan.logOn();
+            try {
+                Statement stm = conn.createStatement();
+                hasil = stm.executeUpdate(query);
+            } catch (SQLException ex) {
+                Logger.getLogger(ExecuteRekamMedis.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            conMan.logOff();
+            }  else if (rkm.getJenis().equals("Obat")) {
+                String query = "Insert into rekam_medis(id_pasien, tanggal, jenis, keterangan, pemeriksa, obat)"
+                 + "value("+ rkm.getPasien().getId_pasien() + ",'"+ rkm.getTanggal()+"','"+rkm.getJenis()+"','"+ rkm.getKeterangan()+"',"+ rkm.getPemeriksa().getId_pekerja()+",'"+ rkm.getDeskripsi()+"')";
+            ConnectionManager conMan = new ConnectionManager();
+            Connection conn = conMan.logOn();
+            try {
+                Statement stm = conn.createStatement();
+                hasil = stm.executeUpdate(query);
+            } catch (SQLException ex) {
+                Logger.getLogger(ExecuteRekamMedis.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            conMan.logOff();
+            }
         }
-        conMan.logOff();
+        
         return hasil;
     }
 }

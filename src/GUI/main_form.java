@@ -8,12 +8,20 @@ package GUI;
 import com.Obat;
 import com.Pasien;
 import com.Pekerja;
+import com.RekamMedis;
 import com.Tindakan;
 import exec.ExecuteObat;
 import exec.ExecutePasien;
 import exec.ExecutePekerja;
+import exec.ExecuteRekamMedis;
 import exec.ExecuteTindakan;
 import java.awt.Color;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
@@ -33,6 +41,7 @@ public class main_form extends javax.swing.JFrame {
     private static ExecutePasien execPsn;
     private static ExecuteObat execObt;
     private static ExecuteTindakan execTnd;
+    private static ExecuteRekamMedis execRkm;
     
     
     
@@ -112,6 +121,19 @@ public class main_form extends javax.swing.JFrame {
         lbl_ttl.setText(psn.getTtl_pasien());
         lbl_asuransi.setText(psn.getAsuransi()); 
     }
+    private void reset() {
+        DefaultTableModel td = (DefaultTableModel) tabel_diagnosis.getModel();
+        td.setRowCount(0);
+        td.addRow(new Object[]{});
+        
+        DefaultTableModel tt = (DefaultTableModel) tabel_tindakan.getModel();
+        tt.setRowCount(0);
+        tt.addRow(new Object[]{});
+        
+        DefaultTableModel to = (DefaultTableModel) tabel_obat.getModel();
+        to.setRowCount(0);
+        to.addRow(new Object[]{});
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -171,7 +193,8 @@ public class main_form extends javax.swing.JFrame {
         tabel_obat = new javax.swing.JTable();
         cbb_obat = new javax.swing.JComboBox();
         jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
+        btn_selesai1 = new javax.swing.JButton();
+        btn_selesai = new javax.swing.JButton();
         background_periksa = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -622,10 +645,25 @@ public class main_form extends javax.swing.JFrame {
 
         pemeriksaan.add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 1380, 610));
 
-        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/Component 12 – 1.png"))); // NOI18N
-        jButton6.setBorder(null);
-        jButton6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        pemeriksaan.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(1250, 640, -1, -1));
+        btn_selesai1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/Component 13 – 1.png"))); // NOI18N
+        btn_selesai1.setBorder(null);
+        btn_selesai1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_selesai1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_selesai1ActionPerformed(evt);
+            }
+        });
+        pemeriksaan.add(btn_selesai1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 640, -1, 40));
+
+        btn_selesai.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/Component 12 – 1.png"))); // NOI18N
+        btn_selesai.setBorder(null);
+        btn_selesai.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_selesai.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_selesaiActionPerformed(evt);
+            }
+        });
+        pemeriksaan.add(btn_selesai, new org.netbeans.lib.awtextra.AbsoluteConstraints(1250, 640, -1, -1));
 
         background_periksa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/body2.png"))); // NOI18N
         background_periksa.setText("+");
@@ -677,6 +715,7 @@ public class main_form extends javax.swing.JFrame {
             login2.hide();
             pemeriksaan.show();
             set_lblpasiem();
+            field_idpasien.setText("");
         } else {
             JOptionPane.showMessageDialog(rootPane, "Cek kembali ID Pasien !!");
         }
@@ -713,10 +752,70 @@ public class main_form extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_setActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        DefaultTableModel dtm = (DefaultTableModel) tabel_tindakan.getModel();
-        dtm.setRowCount(0);
-
+        reset();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void btn_selesai1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_selesai1ActionPerformed
+        login2.show();
+        pemeriksaan.hide();
+    }//GEN-LAST:event_btn_selesai1ActionPerformed
+
+    private void btn_selesaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_selesaiActionPerformed
+        List<RekamMedis> newRm = new ArrayList<>();
+        DateTimeFormatter fd = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String tanggal = fd.format(LocalDateTime.now());
+        
+        int row = tabel_diagnosis.getRowCount();        
+        for (int i = 0; i < row; i++) {
+            RekamMedis rm = new RekamMedis();
+            rm.setDeskripsi(tabel_diagnosis.getValueAt( i, 0).toString());
+            rm.setPasien(psn);
+            rm.setId_rekam(0);
+            rm.setJenis("Diagnosis");
+            rm.setKeterangan(tabel_diagnosis.getValueAt( i, 1).toString());              
+            rm.setPemeriksa(dokter);
+            rm.setTanggal(tanggal);            
+            newRm.add(rm);
+        }
+        
+        row = tabel_tindakan.getRowCount();        
+        for (int i = 0; i < row; i++) {
+            RekamMedis rm = new RekamMedis();
+            String[] desc = tabel_tindakan.getValueAt( i, 0).toString().split(", ");
+            rm.setDeskripsi(desc[1]);
+            rm.setPasien(psn);
+            rm.setId_rekam(0);
+            rm.setJenis("Tindakan");
+            rm.setKeterangan(tabel_tindakan.getValueAt( i, 1).toString());
+            rm.setPemeriksa(dokter);
+            rm.setTanggal(tanggal);            
+            newRm.add(rm);   
+        }
+        row = tabel_obat.getRowCount();        
+        for (int i = 0; i < row; i++) {
+            RekamMedis rm = new RekamMedis();
+            String[] desc = tabel_obat.getValueAt( i, 0).toString().split(", ");
+            rm.setDeskripsi(desc[1]);
+            rm.setPasien(psn);
+            rm.setId_rekam(0);
+            rm.setJenis("Obat");
+            rm.setKeterangan(tabel_obat.getValueAt( i, 1).toString());
+            rm.setPemeriksa(dokter);
+            rm.setTanggal(tanggal);            
+            newRm.add(rm);   
+        }
+
+        
+        execRkm = new ExecuteRekamMedis();
+        
+        int hasil = execRkm.insertRekam(newRm);
+        if(hasil == 1){
+                JOptionPane.showMessageDialog(rootPane, "Berhasil!! Terima Kasih telah melayani Pasien dengan Baik!");
+                reset();
+                login2.show();
+                pemeriksaan.hide();
+        }
+    }//GEN-LAST:event_btn_selesaiActionPerformed
 
     /**
      * @param args the command line arguments
@@ -761,6 +860,8 @@ public class main_form extends javax.swing.JFrame {
     private javax.swing.JLabel bg_header;
     private javax.swing.JPanel body;
     private javax.swing.JButton btn_next;
+    private javax.swing.JButton btn_selesai;
+    private javax.swing.JButton btn_selesai1;
     private javax.swing.JButton btn_set;
     private javax.swing.JComboBox cbb_obat;
     private javax.swing.JComboBox cbb_tindakan;
@@ -775,7 +876,6 @@ public class main_form extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

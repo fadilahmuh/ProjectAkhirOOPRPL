@@ -7,7 +7,11 @@ package com;
 
 import exec.ExecutePekerja;
 import exec.ExecuteRekamMedis;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Scanner;
@@ -68,11 +72,14 @@ public class scratch {
 //            System.out.println("malem");
 //        }
         
-        execRkm = new ExecuteRekamMedis();
-        List<RekamMedis> listRkm = execRkm.getRekam(152018010);
-        for(RekamMedis rkm : listRkm){
-            System.out.println(rkm.toString());
-        }
+//        execRkm = new ExecuteRekamMedis();
+//        List<RekamMedis> listRkm = execRkm.getRekam(152018010);
+//        for(RekamMedis rkm : listRkm){
+//            System.out.println(rkm.toString());
+//        }
+        DateTimeFormatter fd = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String tanggal = fd.format(LocalDateTime.now());
+        System.out.println(tanggal);
     }
     
 }
