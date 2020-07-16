@@ -4,10 +4,10 @@ public class RekamMedis {
     String jenis,tanggal,keterangan,deskripsi;
     Pekerja pemeriksa;
     Pasien id_pasien;
-
+//contructor kosong
     public RekamMedis() {
     }
-
+//constructor full
     public RekamMedis(int id_rekam, int fid_pasien, String obat, String jenis, String tanggal, String keterangan, String deskripsi, Pekerja pemeriksa, Pasien id_pasien) {
         this.id_rekam = id_rekam;
         this.jenis = jenis;
@@ -18,7 +18,7 @@ public class RekamMedis {
         this.id_pasien = id_pasien;
     }
     
-
+//getter and setter
     public int getId_rekam() {
         return id_rekam;
     }
@@ -74,7 +74,7 @@ public class RekamMedis {
     public void setId_pasien(Pasien id_pasien) {
         this.id_pasien = id_pasien;
     }
-
+//toString
     @Override
     public String toString() {
         return "RekamMedis{" + "id_rekam=" + id_rekam  + ", jenis=" + jenis + ", tanggal=" + tanggal + ", keterangan=" + keterangan + ", deskripsi=" + deskripsi + ", pemeriksa=" + pemeriksa + ", id_pasien=" + id_pasien + '}';
