@@ -186,7 +186,6 @@ public class main_form extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         tabel_tindakan = new javax.swing.JTable();
         cbb_tindakan = new javax.swing.JComboBox();
-        jButton2 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         nama_klinik3 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -514,21 +513,12 @@ public class main_form extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("jButton2");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(115, 115, 115)
-                .addComponent(jButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(cbb_tindakan, javax.swing.GroupLayout.PREFERRED_SIZE, 571, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(121, 121, 121)
                 .addComponent(jButton3)
@@ -548,11 +538,9 @@ public class main_form extends javax.swing.JFrame {
                 .addGap(28, 28, 28)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(35, 35, 35)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(cbb_tindakan))
-                    .addComponent(jButton2))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cbb_tindakan))
                 .addContainerGap(49, Short.MAX_VALUE))
         );
 
@@ -751,10 +739,6 @@ public class main_form extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btn_setActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        reset();
-    }//GEN-LAST:event_jButton2ActionPerformed
-
     private void btn_selesai1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_selesai1ActionPerformed
         login2.show();
         pemeriksaan.hide();
@@ -767,6 +751,9 @@ public class main_form extends javax.swing.JFrame {
         
         int row = tabel_diagnosis.getRowCount();        
         for (int i = 0; i < row; i++) {
+            if (tabel_diagnosis.getValueAt( i, 0) == null) {
+                break;
+            }
             RekamMedis rm = new RekamMedis();
             rm.setDeskripsi(tabel_diagnosis.getValueAt( i, 0).toString());
             rm.setPasien(psn);
@@ -780,6 +767,9 @@ public class main_form extends javax.swing.JFrame {
         
         row = tabel_tindakan.getRowCount();        
         for (int i = 0; i < row; i++) {
+            if (tabel_tindakan.getValueAt( i, 0) == null) {
+                break;
+            }
             RekamMedis rm = new RekamMedis();
             String[] desc = tabel_tindakan.getValueAt( i, 0).toString().split(", ");
             rm.setDeskripsi(desc[1]);
@@ -793,6 +783,9 @@ public class main_form extends javax.swing.JFrame {
         }
         row = tabel_obat.getRowCount();        
         for (int i = 0; i < row; i++) {
+            if (tabel_obat.getValueAt( i, 0) == null) {
+                break;
+            }
             RekamMedis rm = new RekamMedis();
             String[] desc = tabel_obat.getValueAt( i, 0).toString().split(", ");
             rm.setDeskripsi(desc[1]);
@@ -872,7 +865,6 @@ public class main_form extends javax.swing.JFrame {
     private javax.swing.JPanel header;
     private javax.swing.JLabel id;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
