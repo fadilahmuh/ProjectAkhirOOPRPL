@@ -5,6 +5,8 @@
  */
 package GUI;
 
+import java.awt.Color;
+
 /**
  *
  * @author fadil
@@ -16,6 +18,11 @@ public class rekam_medis extends javax.swing.JFrame {
      */
     public rekam_medis() {
         initComponents();
+        jScrollPane1.setOpaque(false);
+        jScrollPane1.getViewport().setOpaque(false);
+        jScrollPane1.setBorder(null);
+        
+        lbl_alamat.setBackground(new Color (0,0,0,0));
     }
 
     /**
@@ -34,9 +41,18 @@ public class rekam_medis extends javax.swing.JFrame {
         lbl_ttl = new javax.swing.JLabel();
         gender = new javax.swing.JLabel();
         lbl_gender = new javax.swing.JLabel();
+        asuransi1 = new javax.swing.JLabel();
         asuransi = new javax.swing.JLabel();
         lbl_asuransi = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        id = new javax.swing.JLabel();
+        lbl_id = new javax.swing.JLabel();
+        id1 = new javax.swing.JLabel();
+        lbl_id1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        lbl_alamat = new javax.swing.JTextArea();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tabel_rekam = new javax.swing.JTable();
         background_remed = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -51,47 +67,117 @@ public class rekam_medis extends javax.swing.JFrame {
         nama.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
         nama.setForeground(new java.awt.Color(112, 112, 112));
         nama.setText("Nama Pasien   :");
-        getContentPane().add(nama, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 230, 160, -1));
+        getContentPane().add(nama, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 260, 160, -1));
 
         lbl_nama.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
         lbl_nama.setForeground(new java.awt.Color(112, 112, 112));
         lbl_nama.setText("Jailangkung");
-        getContentPane().add(lbl_nama, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 230, 210, -1));
+        getContentPane().add(lbl_nama, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 260, 210, -1));
 
         ttl.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
         ttl.setForeground(new java.awt.Color(112, 112, 112));
         ttl.setText("TTL           :");
-        getContentPane().add(ttl, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 310, 150, -1));
+        getContentPane().add(ttl, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 290, 150, -1));
 
         lbl_ttl.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
         lbl_ttl.setForeground(new java.awt.Color(112, 112, 112));
         lbl_ttl.setText("12/12/2012, Bandung");
-        getContentPane().add(lbl_ttl, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 450, 210, -1));
+        getContentPane().add(lbl_ttl, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 290, 210, -1));
 
         gender.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
         gender.setForeground(new java.awt.Color(112, 112, 112));
         gender.setText("Jenis Kelamin :");
-        getContentPane().add(gender, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 350, -1, -1));
+        getContentPane().add(gender, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 230, -1, -1));
 
         lbl_gender.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
         lbl_gender.setForeground(new java.awt.Color(112, 112, 112));
         lbl_gender.setText("Laki-Perempuan");
-        getContentPane().add(lbl_gender, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 380, 210, -1));
+        getContentPane().add(lbl_gender, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 230, 210, -1));
+
+        asuransi1.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
+        asuransi1.setForeground(new java.awt.Color(112, 112, 112));
+        asuransi1.setText("Alamat        :");
+        getContentPane().add(asuransi1, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 290, 150, -1));
 
         asuransi.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
         asuransi.setForeground(new java.awt.Color(112, 112, 112));
         asuransi.setText("Asuransi      :");
-        getContentPane().add(asuransi, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 280, 150, -1));
+        getContentPane().add(asuransi, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 260, 150, -1));
 
         lbl_asuransi.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
         lbl_asuransi.setForeground(new java.awt.Color(112, 112, 112));
         lbl_asuransi.setText("BPRSJ");
-        getContentPane().add(lbl_asuransi, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 280, 210, -1));
+        getContentPane().add(lbl_asuransi, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 260, 210, -1));
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/Component 13 – 1.png"))); // NOI18N
         jButton1.setBorder(null);
         jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 880, -1, -1));
+
+        id.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
+        id.setForeground(new java.awt.Color(112, 112, 112));
+        id.setText("ID   Pasien   :");
+        getContentPane().add(id, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 230, 160, -1));
+
+        lbl_id.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
+        lbl_id.setForeground(new java.awt.Color(112, 112, 112));
+        lbl_id.setText("15210856");
+        getContentPane().add(lbl_id, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 230, 210, -1));
+
+        id1.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
+        id1.setForeground(new java.awt.Color(112, 112, 112));
+        id1.setText("NIK Pasien    :");
+        getContentPane().add(id1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 320, 160, -1));
+
+        lbl_id1.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
+        lbl_id1.setForeground(new java.awt.Color(112, 112, 112));
+        lbl_id1.setText("654984000000654");
+        getContentPane().add(lbl_id1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 320, 210, -1));
+
+        jScrollPane1.setHorizontalScrollBar(null);
+
+        lbl_alamat.setColumns(20);
+        lbl_alamat.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
+        lbl_alamat.setForeground(new java.awt.Color(112, 112, 112));
+        lbl_alamat.setLineWrap(true);
+        lbl_alamat.setRows(5);
+        lbl_alamat.setText("asdasdasd asd ad ad   sd sd as asda a asda sd ");
+        lbl_alamat.setOpaque(false);
+        lbl_alamat.setRequestFocusEnabled(false);
+        jScrollPane1.setViewportView(lbl_alamat);
+
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 290, 280, 90));
+
+        tabel_rekam.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        tabel_rekam.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Tanggal", "Dokter", "Jenis", "Deskripsi", "Keterangan"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tabel_rekam.setFillsViewportHeight(true);
+        tabel_rekam.setOpaque(false);
+        tabel_rekam.setRowHeight(25);
+        jScrollPane2.setViewportView(tabel_rekam);
+        if (tabel_rekam.getColumnModel().getColumnCount() > 0) {
+            tabel_rekam.getColumnModel().getColumn(0).setMinWidth(200);
+            tabel_rekam.getColumnModel().getColumn(0).setMaxWidth(200);
+        }
+
+        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 400, 1330, 460));
+        jScrollPane2.setBackground(new Color (0,0,0,0));
+        jScrollPane2.setOpaque(false);
+        jScrollPane2.getViewport().setOpaque(false);
 
         background_remed.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/Web 1920 – 10.png"))); // NOI18N
         getContentPane().add(background_remed, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -136,15 +222,24 @@ public class rekam_medis extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel asuransi;
+    private javax.swing.JLabel asuransi1;
     private javax.swing.JLabel background_remed;
     private javax.swing.JLabel gender;
+    private javax.swing.JLabel id;
+    private javax.swing.JLabel id1;
     private javax.swing.JButton jButton1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTextArea lbl_alamat;
     private javax.swing.JLabel lbl_asuransi;
     private javax.swing.JLabel lbl_gender;
+    private javax.swing.JLabel lbl_id;
+    private javax.swing.JLabel lbl_id1;
     private javax.swing.JLabel lbl_nama;
     private javax.swing.JLabel lbl_ttl;
     private javax.swing.JLabel nama;
     private javax.swing.JLabel nama_rs;
+    private javax.swing.JTable tabel_rekam;
     private javax.swing.JLabel ttl;
     // End of variables declaration//GEN-END:variables
 }

@@ -33,4 +33,22 @@ public class ExecuteObat {
         conMan.logOff();
         return listObat;
     }
+    public Obat getItemObat(String id){
+        Obat ob = new Obat();
+        String query = "select * from obat where id_obat='" + id + "'" ;
+        ConnectionManager conMan = new ConnectionManager();
+        Connection conn = conMan.logOn();
+        try {
+            Statement stm = conn.createStatement();
+            ResultSet rs = stm.executeQuery(query);
+            rs.next();            
+            ob.setId_obat(rs.getString("id_obat"));
+            ob.setNama_obat(rs.getString("nama_obat"));
+            ob.setHarga_obat(rs.getInt("harga_obat"));            
+        } catch (SQLException ex) {
+            Logger.getLogger(ExecuteObat.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        conMan.logOff();
+        return ob;
+    }
 }

@@ -1,6 +1,11 @@
 package exec;
 
+import com.Obat;
+import com.Pasien;
+import com.Pekerja;
 import com.RekamMedis;
+import com.Tindakan;
+import db.ConnectionManager;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,46 +14,96 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
 
 public class ExecuteRekamMedis {
-    public List<RekamMedis> getRekam(){
+    private ExecutePasien execPsn;
+    private ExecutePekerja execPkj;
+    private ExecuteObat execObt;
+    private ExecuteTindakan execTnd;
+    
+    public List<RekamMedis> getRekam(int idpsn){
         List<RekamMedis> listRekam = new ArrayList<>();
         String query = "select * from rekam_medis";
         ConnectionManager conMan = new ConnectionManager();
         Connection conn = conMan.logOn();
         try {
+            execPsn = new ExecutePasien();
+            execPkj = new ExecutePekerja();
+            execObt = new ExecuteObat();
+            execTnd = new ExecuteTindakan();
+            Pasien ps = execPsn.getPasien(idpsn);
             Statement stm = conn.createStatement();
             ResultSet rs = stm.executeQuery(query);
             while(rs.next()){
                 RekamMedis rm = new RekamMedis();
                 rm.setId_rekam(rs.getInt("id_rekam"));
-                rm.setId_pasien(rs.get("nama"));
-                sp.setAlamat(rs.getString("alamat"));
-                sp.setEmail(rs.getString("email"));
-                sp.setNo_hp(rs.getString("no_hp"));
-                listSupplier.add(sp);
+                rm.setId_pasien(ps);
+                rm.setTanggal(rs.getString("tanggal"));                
+                rm.setJenis(rs.getString("jenis"));
+                rm.setKeterangan(rs.getString("keterangan"));
+                
+                Pekerja pkj = execPkj.getPekerja(rs.getInt("pemeriksa"));
+                rm.setPemeriksa(pkj);
+                
+                
+                if (rm.getJenis().equals("Diagnosis")) {
+                    rm.setDeskripsi(rs.getString("deskripsi"));
+                } else if (rm.getJenis().equals("Obat")) {
+                    Obat ob = execObt.getItemObat(rs.getString("obat"));
+                    rm.setDeskripsi(ob.getNama_obat());
+                } else if (rm.getJenis().equals("Tindakan")) {
+                    Tindakan td = execTnd.getItemTindakan(rs.getString("tindakan"));
+                    rm.setDeskripsi(td.getNama_tindakan());
+                }
+                
+                listRekam.add(rm);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(ExecuteSupplier.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ExecuteRekamMedis.class.getName()).log(Level.SEVERE, null, ex);
         }
         conMan.logOff();
-        return listSupplier;
+        return listRekam;
     }
     
-    public int insertsupplier(Supplier sp){
-        int hasil = 0;
-        String query = "Insert into supplier(id_supplier, nama, alamat, email, no_hp)"
-                + "value("+ sp.getId_supplier()+",'"+ 
-                sp.getNama()+"','"+ sp.getAlamat()+"','"+sp.getEmail()+"','"+ sp.getNo_hp()+"')";
-        ConnectionManager conMan = new ConnectionManager();
-        Connection conn = conMan.logOn();
-        try {
-            Statement stm = conn.createStatement();
-            hasil = stm.executeUpdate(query);
-        } catch (SQLException ex) {
-            Logger.getLogger(ExecuteSupplier.class.getName()).log(Level.SEVERE, null, ex);
+    public DefaultTableModel Bndtoobjek (List<RekamMedis> list) {        
+        DefaultTableModel model = new DefaultTableModel();
+        Object[] kolom = new Object[5];
+        
+        kolom[0]="Airport Code";
+        kolom[1]="Airport Names";
+        kolom[2]="City";
+        kolom[3]="Country";
+        kolom[4]="Time Zone";
+
+        
+        model.setColumnIdentifiers(kolom);
+        Object[] data = new Object[5];
+        for(Bandara bnd : list){
+            data[0]= bnd.getKd_bandara();
+            data[1]= bnd.getNama();
+            data[2]= bnd.getKota();
+            data[3]= bnd.getNegara();
+            data[4]= bnd.getUtc();            
+            model.addRow(data);
         }
-        conMan.logOff();
-        return hasil;
+        
+        return model;        
     }
+//    public int insertsupplier(Supplier sp){
+//        int hasil = 0;
+//        String query = "Insert into supplier(id_supplier, nama, alamat, email, no_hp)"
+//                + "value("+ sp.getId_supplier()+",'"+ 
+//                sp.getNama()+"','"+ sp.getAlamat()+"','"+sp.getEmail()+"','"+ sp.getNo_hp()+"')";
+//        ConnectionManager conMan = new ConnectionManager();
+//        Connection conn = conMan.logOn();
+//        try {
+//            Statement stm = conn.createStatement();
+//            hasil = stm.executeUpdate(query);
+//        } catch (SQLException ex) {
+//            Logger.getLogger(ExecuteSupplier.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        conMan.logOff();
+//        return hasil;
+//    }
 }

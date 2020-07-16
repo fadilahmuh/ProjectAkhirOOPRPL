@@ -8,7 +8,9 @@ package GUI;
 import com.Obat;
 import com.Pasien;
 import com.Pekerja;
+import com.Tindakan;
 import exec.ExecuteObat;
+import exec.ExecuteTindakan;
 import java.awt.Color;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
@@ -25,6 +27,7 @@ public class form_periksa extends javax.swing.JFrame {
     private static Pasien pasien;
     private static String sf;
     private static ExecuteObat execObt;
+    private static ExecuteTindakan execTnd;
     
     
     
@@ -45,11 +48,14 @@ public class form_periksa extends javax.swing.JFrame {
         pasien = psn;
         sf = shift;
         set();
+        set_cbbobat();
+        set_cbbtndk();
     }
 
     private form_periksa() {
         initComponents();
         set_cbbobat();
+        set_cbbtndk();
     }
     
     private void set() {
@@ -94,6 +100,17 @@ public class form_periksa extends javax.swing.JFrame {
         DefaultComboBoxModel model = new DefaultComboBoxModel(listobt2);
         cbb_obat.setModel(model);  
     }
+    private void set_cbbtndk() {
+        execTnd = new ExecuteTindakan();
+        
+        List<Tindakan> listTnd = execTnd.getTindakan(dokter.getUnit().getKd_unit());
+        String[] listtnd2 = new String[listTnd.size()];
+        for (int i = 0; i < listtnd2.length; i++) {
+            listtnd2[i] = listTnd.get(i).getNama_tindakan() + ", " + listTnd.get(i).getId_tindakan();
+        }     
+        DefaultComboBoxModel model = new DefaultComboBoxModel(listtnd2);
+        cbb_tindakan.setModel(model);  
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -135,7 +152,7 @@ public class form_periksa extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tabel_tindakan = new javax.swing.JTable();
-        jComboBox1 = new javax.swing.JComboBox();
+        cbb_tindakan = new javax.swing.JComboBox();
         jPanel3 = new javax.swing.JPanel();
         nama_klinik3 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -412,8 +429,13 @@ public class form_periksa extends javax.swing.JFrame {
         ((DefaultTableCellRenderer)tabel_tindakan.getDefaultRenderer(Object.class)).setBackground(new Color(254,254,254,1));
         tabel_tindakan.setShowGrid(true);
 
-        jComboBox1.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbb_tindakan.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        cbb_tindakan.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbb_tindakan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbb_tindakanActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -421,7 +443,7 @@ public class form_periksa extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 571, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cbb_tindakan, javax.swing.GroupLayout.PREFERRED_SIZE, 571, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(121, 121, 121)
                 .addComponent(jButton3)
                 .addGap(292, 292, 292))
@@ -442,7 +464,7 @@ public class form_periksa extends javax.swing.JFrame {
                 .addGap(35, 35, 35)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jComboBox1))
+                    .addComponent(cbb_tindakan))
                 .addContainerGap(49, Short.MAX_VALUE))
         );
 
@@ -561,7 +583,8 @@ public class form_periksa extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel) tabel_tindakan.getModel();
+        model.addRow(new Object[]{} );
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -572,10 +595,14 @@ public class form_periksa extends javax.swing.JFrame {
     private void cbb_obatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbb_obatActionPerformed
         int row = tabel_obat.getRowCount();
         
-//        String y = "test test";
-//        Object x = y;
         tabel_obat.setValueAt(cbb_obat.getSelectedItem() , row - 1, 0);
     }//GEN-LAST:event_cbb_obatActionPerformed
+
+    private void cbb_tindakanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbb_tindakanActionPerformed
+        int row = tabel_tindakan.getRowCount();
+        
+        tabel_tindakan.setValueAt(cbb_tindakan.getSelectedItem() , row - 1, 0);
+    }//GEN-LAST:event_cbb_tindakanActionPerformed
 
     /**
      * @param args the command line arguments
@@ -616,6 +643,7 @@ public class form_periksa extends javax.swing.JFrame {
     private javax.swing.JLabel asuransi;
     private javax.swing.JLabel background_periksa;
     private javax.swing.JComboBox cbb_obat;
+    private javax.swing.JComboBox cbb_tindakan;
     private javax.swing.JLabel gender;
     private javax.swing.JLabel id;
     private javax.swing.JButton jButton1;
@@ -624,7 +652,6 @@ public class form_periksa extends javax.swing.JFrame {
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
-    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

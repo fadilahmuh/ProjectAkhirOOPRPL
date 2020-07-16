@@ -1,7 +1,7 @@
 package com;
 public class RekamMedis {
     int id_rekam;
-    String obat,jenis,tanggal,keterangan,deskripsi;
+    String jenis,tanggal,keterangan,deskripsi;
     Pekerja pemeriksa;
     Pasien id_pasien;
 
@@ -10,7 +10,6 @@ public class RekamMedis {
 
     public RekamMedis(int id_rekam, int fid_pasien, String obat, String jenis, String tanggal, String keterangan, String deskripsi, Pekerja pemeriksa, Pasien id_pasien) {
         this.id_rekam = id_rekam;
-        this.obat = obat;
         this.jenis = jenis;
         this.tanggal = tanggal;
         this.keterangan = keterangan;
@@ -26,15 +25,7 @@ public class RekamMedis {
 
     public void setId_rekam(int id_rekam) {
         this.id_rekam = id_rekam;
-    }
-
-    public String getObat() {
-        return obat;
-    }
-
-    public void setObat(String obat) {
-        this.obat = obat;
-    }
+    }       
 
     public String getJenis() {
         return jenis;
@@ -86,7 +77,7 @@ public class RekamMedis {
 
     @Override
     public String toString() {
-        return "RekamMedis{" + "id_rekam=" + id_rekam + ", obat=" + obat + ", jenis=" + jenis + ", tanggal=" + tanggal + ", keterangan=" + keterangan + ", deskripsi=" + deskripsi + ", pemeriksa=" + pemeriksa + ", id_pasien=" + id_pasien + '}';
+        return "RekamMedis{" + "id_rekam=" + id_rekam  + ", jenis=" + jenis + ", tanggal=" + tanggal + ", keterangan=" + keterangan + ", deskripsi=" + deskripsi + ", pemeriksa=" + pemeriksa + ", id_pasien=" + id_pasien + '}';
     }
     
     

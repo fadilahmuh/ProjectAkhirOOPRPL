@@ -6,8 +6,10 @@
 package com;
 
 import exec.ExecutePekerja;
+import exec.ExecuteRekamMedis;
 import java.time.LocalTime;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Scanner;
 import javax.swing.JOptionPane;
 
@@ -17,6 +19,7 @@ import javax.swing.JOptionPane;
  */
 public class scratch {
     private static ExecutePekerja execPkj;
+    private static ExecuteRekamMedis execRkm;
     /**
      * @param args the command line arguments
      */
@@ -35,16 +38,16 @@ public class scratch {
 //        
 //        System.out.println(dokter.toString());
             
-        execPkj = new ExecutePekerja();
-        
-        
-        Pekerja prt1 = execPkj.getPekerja(152018001);
-        System.out.println(prt1.toString());
-        if (prt1.getId_pekerja() != 0  && prt1.getPosisi().equals("Perawat") ){
-            System.out.println("benar, perawat");
-        } else {
-            System.out.println("cek id");
-        }
+//        execPkj = new ExecutePekerja();
+//        
+//        
+//        Pekerja prt1 = execPkj.getPekerja(152018001);
+//        System.out.println(prt1.toString());
+//        if (prt1.getId_pekerja() != 0  && prt1.getPosisi().equals("Perawat") ){
+//            System.out.println("benar, perawat");
+//        } else {
+//            System.out.println("cek id");
+//        }
             
 //        Pekerja pkj = new Pekerja();
 //        System.out.println(pkj);
@@ -64,6 +67,12 @@ public class scratch {
 //        }else if(timeOfDay >= 18 && timeOfDay < 24){
 //            System.out.println("malem");
 //        }
+        
+        execRkm = new ExecuteRekamMedis();
+        List<RekamMedis> listRkm = execRkm.getRekam(152018010);
+        for(RekamMedis rkm : listRkm){
+            System.out.println(rkm.toString());
+        }
     }
     
 }
