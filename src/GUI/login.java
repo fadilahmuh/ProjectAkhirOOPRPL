@@ -78,7 +78,7 @@ public class login extends javax.swing.JFrame {
              JOptionPane.showMessageDialog(rootPane, "Login gagal, ID tidak terdaftar sebagai Dokter!!");
         } else if (akun.getId_pekerja() != 0 && akun.getPassword().equals(field_pass.getText()) && akun.getPosisi().equals("Dokter")) {
             dispose();
-            new login2(akun).setVisible(true);
+            new main_form(akun).setVisible(true);
         }
         
         

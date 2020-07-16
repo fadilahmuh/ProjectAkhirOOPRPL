@@ -24,7 +24,7 @@ public class ExecuteRekamMedis {
     
     public List<RekamMedis> getRekam(int idpsn){
         List<RekamMedis> listRekam = new ArrayList<>();
-        String query = "select * from rekam_medis";
+        String query = "select * from rekam_medis where id_pasien=" + idpsn + " Order by tanggal desc";
         ConnectionManager conMan = new ConnectionManager();
         Connection conn = conMan.logOn();
         try {
@@ -66,10 +66,10 @@ public class ExecuteRekamMedis {
         return listRekam;
     }
     
-    public String[][] Rekamtoobjek(){
-        List<RekamMedis> myRm = new ArrayList<RekamMedis>();
+    public String[][] Rekamtoobjek(int id){
+        List<RekamMedis> myRm = new ArrayList<>();
         ExecuteRekamMedis eRm = new ExecuteRekamMedis();
-        myRm = eRm.getRekam(152018010);
+        myRm = eRm.getRekam(id);
         String[][] dataRekam = new String[myRm.size()][5];
         int i=0;
         for(RekamMedis Rm : myRm){
@@ -83,30 +83,6 @@ public class ExecuteRekamMedis {
         return dataRekam;
     }
     
-//    public DefaultTableModel Rekamtoobjek (List<RekamMedis> list) {        
-//        DefaultTableModel model = new DefaultTableModel();
-//        Object[] kolom = new Object[5];
-//        
-//        kolom[0]="Airport Code";
-//        kolom[1]="Airport Names";
-//        kolom[2]="City";
-//        kolom[3]="Country";
-//        kolom[4]="Time Zone";
-//
-//        
-//        model.setColumnIdentifiers(kolom);
-//        Object[] data = new Object[5];
-//        for(Bandara bnd : list){
-//            data[0]= bnd.getKd_bandara();
-//            data[1]= bnd.getNama();
-//            data[2]= bnd.getKota();
-//            data[3]= bnd.getNegara();
-//            data[4]= bnd.getUtc();            
-//            model.addRow(data);
-//        }
-//        
-//        return model;        
-//    }
 //    public int insertsupplier(Supplier sp){
 //        int hasil = 0;
 //        String query = "Insert into supplier(id_supplier, nama, alamat, email, no_hp)"

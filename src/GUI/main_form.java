@@ -10,8 +10,11 @@ import com.Pasien;
 import com.Pekerja;
 import com.Tindakan;
 import exec.ExecuteObat;
+import exec.ExecutePasien;
+import exec.ExecutePekerja;
 import exec.ExecuteTindakan;
 import java.awt.Color;
+import java.util.Calendar;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
@@ -22,10 +25,12 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author fadil
  */
-public class form_periksa extends javax.swing.JFrame {
-    private static Pekerja dokter,perawat1,perawat2;
-    private static Pasien pasien;
+public class main_form extends javax.swing.JFrame {
+    private static Pekerja dokter,prt1,prt2;
+    private static Pasien psn;
     private static String sf;
+    private static ExecutePekerja execPkj;
+    private static ExecutePasien execPsn;
     private static ExecuteObat execObt;
     private static ExecuteTindakan execTnd;
     
@@ -35,58 +40,43 @@ public class form_periksa extends javax.swing.JFrame {
     /**
      * Creates new form form_periksa
      * @param dkt
-     * @param prt1
-     * @param prt2
-     * @param shift
-     * @param psn
      */
-    public form_periksa(Pekerja dkt, Pekerja prt1, Pekerja prt2, String shift, Pasien psn) {
+    public main_form(Pekerja dkt) {
         initComponents();
+        login2.show();
         dokter = dkt;
-        perawat1 = prt1;
-        perawat2 = prt2;
-        pasien = psn;
-        sf = shift;
-        set();
+
+        set_dok();
         set_cbbobat();
         set_cbbtndk();
     }
 
-    private form_periksa() {
+    private main_form() {
         initComponents();
         set_cbbobat();
         set_cbbtndk();
     }
     
-    private void set() {
-        String[] nama = dokter.getNama().split(" ");
-        nama_dokter.setText("Dokter  : Dr." + nama[0] + " " + nama[1]);       
-        nama_klinik.setText(dokter.getUnit().getNama_unit());
-        
-        lbl_shift.setText(sf);
-                
-        if (perawat1.getId_pekerja() != 0  && perawat1.getPosisi().equals("Perawat") ){
-            String[] sprt1 = perawat1.getNama().split(" ");
-            lbl_perawat1.setText("1. " + sprt1[0] + " " + sprt1[1]);
-        } else {
-            lbl_perawat1.setText("-");
+    private void set_dok() {
+       String[] nama = dokter.getNama().split(" ");
+       nama_dokter.setText("Dokter  : Dr." + nama[0] + " " + nama[1]);
+       
+       nama_klinik.setText(dokter.getUnit().getNama_unit());
+       
+        Calendar c = Calendar.getInstance();
+        int timeOfDay = c.get(Calendar.HOUR_OF_DAY);
+        String shift = null;
+        if(timeOfDay >= 0 && timeOfDay < 11){
+            shift = "Shift   : Pagi";
+        }else if(timeOfDay >= 11 && timeOfDay < 15){
+            lbl_shift.setText("Shift   : Siang");        
+            shift = "Shift   : Siang";
+        }else if(timeOfDay >= 15 && timeOfDay < 18){
+            shift = "Shift   : Sore";
+        }else if(timeOfDay >= 18 && timeOfDay < 24){
+            shift = "Shift   : Malam";            
         }
-        if (perawat2.getId_pekerja() != 0  && perawat2.getPosisi().equals("Perawat") ){
-            String[] sprt2 = perawat2.getNama().split(" ");
-            lbl_perawat2.setText("2. " + sprt2[0] + " " + sprt2[1]);
-        } else {
-            lbl_perawat2.setText("-");
-        }
-        
-        lbl_id.setText(String.valueOf(pasien.getId_pasien()));
-        lbl_nama.setText(pasien.getNama_pasien());
-        if (pasien.getGender_pasien().equals("L")) {
-            lbl_gender.setText("Laki-laki");
-        } else {
-            lbl_gender.setText("Perempuan");
-        }
-        
-        lbl_asuransi.setText(pasien.getAsuransi());      
+        lbl_shift.setText(shift);       
     }
     
     private void set_cbbobat() {
@@ -111,6 +101,17 @@ public class form_periksa extends javax.swing.JFrame {
         DefaultComboBoxModel model = new DefaultComboBoxModel(listtnd2);
         cbb_tindakan.setModel(model);  
     }
+    private void set_lblpasiem() {
+        lbl_id.setText(String.valueOf(psn.getId_pasien()));
+        lbl_nama.setText(psn.getNama_pasien());
+        if (psn.getGender_pasien().equals("L")) {
+            lbl_gender.setText("Laki-laki");
+        } else {
+            lbl_gender.setText("Perempuan");
+        }
+        lbl_ttl.setText(psn.getTtl_pasien());
+        lbl_asuransi.setText(psn.getAsuransi()); 
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -121,6 +122,7 @@ public class form_periksa extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        header = new javax.swing.JPanel();
         nama_klinik = new javax.swing.JLabel();
         nama_rs = new javax.swing.JLabel();
         nama_dokter = new javax.swing.JLabel();
@@ -128,6 +130,16 @@ public class form_periksa extends javax.swing.JFrame {
         lbl_perawat = new javax.swing.JLabel();
         lbl_perawat1 = new javax.swing.JLabel();
         lbl_perawat2 = new javax.swing.JLabel();
+        bg_header = new javax.swing.JLabel();
+        body = new javax.swing.JPanel();
+        login2 = new javax.swing.JPanel();
+        field_idpasien = new javax.swing.JTextField();
+        btn_next = new javax.swing.JButton();
+        field_prwt1 = new javax.swing.JTextField();
+        field_prwt2 = new javax.swing.JTextField();
+        btn_set = new javax.swing.JButton();
+        bg_body1 = new javax.swing.JLabel();
+        pemeriksaan = new javax.swing.JPanel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         nama_klinik1 = new javax.swing.JLabel();
@@ -152,6 +164,7 @@ public class form_periksa extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         tabel_tindakan = new javax.swing.JTable();
         cbb_tindakan = new javax.swing.JComboBox();
+        jButton2 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         nama_klinik3 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -164,40 +177,87 @@ public class form_periksa extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        header.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
         nama_klinik.setFont(new java.awt.Font("Dialog", 1, 48)); // NOI18N
         nama_klinik.setForeground(new java.awt.Color(112, 112, 112));
         nama_klinik.setText("Klinik . . . . . . . . . ");
-        getContentPane().add(nama_klinik, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 10, 680, -1));
+        header.add(nama_klinik, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 20, 680, -1));
 
         nama_rs.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         nama_rs.setForeground(new java.awt.Color(112, 112, 112));
         nama_rs.setText("Rumah Sakit Al-Boromeous");
-        getContentPane().add(nama_rs, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 70, -1, -1));
+        header.add(nama_rs, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 80, -1, -1));
 
         nama_dokter.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
         nama_dokter.setForeground(new java.awt.Color(112, 112, 112));
         nama_dokter.setText("Dokter  : Dr. Broto Asmoro uwu");
-        getContentPane().add(nama_dokter, new org.netbeans.lib.awtextra.AbsoluteConstraints(1120, 10, -1, -1));
+        header.add(nama_dokter, new org.netbeans.lib.awtextra.AbsoluteConstraints(1120, 10, -1, -1));
 
         lbl_shift.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
         lbl_shift.setForeground(new java.awt.Color(112, 112, 112));
         lbl_shift.setText("Shift   : Pagi");
-        getContentPane().add(lbl_shift, new org.netbeans.lib.awtextra.AbsoluteConstraints(1120, 40, 290, -1));
+        header.add(lbl_shift, new org.netbeans.lib.awtextra.AbsoluteConstraints(1120, 40, 290, -1));
 
         lbl_perawat.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
         lbl_perawat.setForeground(new java.awt.Color(112, 112, 112));
         lbl_perawat.setText("Perawat : ");
-        getContentPane().add(lbl_perawat, new org.netbeans.lib.awtextra.AbsoluteConstraints(1120, 70, 100, -1));
+        header.add(lbl_perawat, new org.netbeans.lib.awtextra.AbsoluteConstraints(1120, 70, 100, -1));
 
         lbl_perawat1.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
         lbl_perawat1.setForeground(new java.awt.Color(112, 112, 112));
         lbl_perawat1.setText("1. ABCDEFGHIJKL");
-        getContentPane().add(lbl_perawat1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1220, 70, 210, -1));
+        header.add(lbl_perawat1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1220, 70, 210, -1));
 
         lbl_perawat2.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
         lbl_perawat2.setForeground(new java.awt.Color(112, 112, 112));
         lbl_perawat2.setText("2. LKJIHGFEDCBA");
-        getContentPane().add(lbl_perawat2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1220, 100, 210, -1));
+        header.add(lbl_perawat2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1220, 100, 210, -1));
+
+        bg_header.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/header.png"))); // NOI18N
+        header.add(bg_header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1440, 160));
+
+        getContentPane().add(header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1440, 160));
+
+        body.setLayout(new java.awt.CardLayout());
+
+        login2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        field_idpasien.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        login2.add(field_idpasien, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 160, 230, 30));
+
+        btn_next.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/Component 3 – 1.png"))); // NOI18N
+        btn_next.setBorder(null);
+        btn_next.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_next.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_nextActionPerformed(evt);
+            }
+        });
+        login2.add(btn_next, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 240, -1, -1));
+
+        field_prwt1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        login2.add(field_prwt1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 470, 230, 30));
+
+        field_prwt2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        login2.add(field_prwt2, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 540, 230, 30));
+
+        btn_set.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/Component 2 – 1.png"))); // NOI18N
+        btn_set.setBorder(null);
+        btn_set.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_set.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_setActionPerformed(evt);
+            }
+        });
+        login2.add(btn_set, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 600, -1, -1));
+
+        bg_body1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/body1.png"))); // NOI18N
+        login2.add(bg_body1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -10, -1, 700));
+
+        body.add(login2, "card2");
+
+        pemeriksaan.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jTabbedPane1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
 
@@ -431,12 +491,21 @@ public class form_periksa extends javax.swing.JFrame {
             }
         });
 
+        jButton2.setText("jButton2");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addGap(115, 115, 115)
+                .addComponent(jButton2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(cbb_tindakan, javax.swing.GroupLayout.PREFERRED_SIZE, 571, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(121, 121, 121)
                 .addComponent(jButton3)
@@ -456,9 +525,11 @@ public class form_periksa extends javax.swing.JFrame {
                 .addGap(28, 28, 28)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(35, 35, 35)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(cbb_tindakan))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(cbb_tindakan))
+                    .addComponent(jButton2))
                 .addContainerGap(49, Short.MAX_VALUE))
         );
 
@@ -549,16 +620,20 @@ public class form_periksa extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Obat", jPanel3);
 
-        getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, 1380, 610));
+        pemeriksaan.add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 1380, 610));
 
         jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/Component 12 – 1.png"))); // NOI18N
         jButton6.setBorder(null);
         jButton6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        getContentPane().add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(1240, 810, -1, -1));
+        pemeriksaan.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(1250, 640, -1, -1));
 
-        background_periksa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/Web 1920 – 5.png"))); // NOI18N
+        background_periksa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/body2.png"))); // NOI18N
         background_periksa.setText("+");
-        getContentPane().add(background_periksa, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        pemeriksaan.add(background_periksa, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1440, 690));
+
+        body.add(pemeriksaan, "card3");
+
+        getContentPane().add(body, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 160, 1440, 690));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -591,9 +666,57 @@ public class form_periksa extends javax.swing.JFrame {
     }//GEN-LAST:event_cbb_tindakanActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        this.setVisible(false);
-        new rekam_medis(pasien).setVisible(true);
+        new rekam_medis(psn).setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void btn_nextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_nextActionPerformed
+        execPsn = new ExecutePasien();
+
+        psn = execPsn.getPasien(Integer.valueOf(field_idpasien.getText()));
+        if (psn.getId_pasien()!= 0){
+            login2.hide();
+            pemeriksaan.show();
+            set_lblpasiem();
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "Cek kembali ID Pasien !!");
+        }
+    }//GEN-LAST:event_btn_nextActionPerformed
+
+    private void btn_setActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_setActionPerformed
+        execPkj = new ExecutePekerja();
+
+        if (!(field_prwt1.getText().equals(""))) {
+            prt1 = execPkj.getPekerja(Integer.valueOf(field_prwt1.getText()));
+            if (prt1.getId_pekerja() != 0  && prt1.getPosisi().equals("Perawat") ){
+                String[] sprt1 = prt1.getNama().split(" ");
+                lbl_perawat1.setText("1. " + sprt1[0] + " " + sprt1[1]);
+            } else {
+                JOptionPane.showMessageDialog(rootPane, "Cek kembali ID Perawat 1 !!");
+                lbl_perawat1.setText("-");
+            }
+        }
+
+        if (!(field_prwt2.getText().equals(""))) {
+            prt2 = execPkj.getPekerja(Integer.valueOf(field_prwt2.getText()));
+            if (prt2.getId_pekerja() != 0  && prt2.getPosisi().equals("Perawat") ){
+                String[] sprt2 = prt2.getNama().split(" ");
+                lbl_perawat2.setText("2. " + sprt2[0] + " " + sprt2[1]);
+            } else {
+                JOptionPane.showMessageDialog(rootPane, "Cek kembali ID Perawat 2 !!");
+                lbl_perawat2.setText("-");
+            }
+        }else {
+            prt2 = new Pekerja();
+            lbl_perawat2.setText("-");
+        }
+
+    }//GEN-LAST:event_btn_setActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        DefaultTableModel dtm = (DefaultTableModel) tabel_tindakan.getModel();
+        dtm.setRowCount(0);
+
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -612,20 +735,21 @@ public class form_periksa extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(form_periksa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(main_form.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(form_periksa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(main_form.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(form_periksa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(main_form.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(form_periksa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(main_form.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new form_periksa().setVisible(true);
+                new main_form().setVisible(true);
             }
         });
     }
@@ -633,11 +757,21 @@ public class form_periksa extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel asuransi;
     private javax.swing.JLabel background_periksa;
+    private javax.swing.JLabel bg_body1;
+    private javax.swing.JLabel bg_header;
+    private javax.swing.JPanel body;
+    private javax.swing.JButton btn_next;
+    private javax.swing.JButton btn_set;
     private javax.swing.JComboBox cbb_obat;
     private javax.swing.JComboBox cbb_tindakan;
+    private javax.swing.JTextField field_idpasien;
+    private javax.swing.JTextField field_prwt1;
+    private javax.swing.JTextField field_prwt2;
     private javax.swing.JLabel gender;
+    private javax.swing.JPanel header;
     private javax.swing.JLabel id;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
@@ -659,6 +793,7 @@ public class form_periksa extends javax.swing.JFrame {
     private javax.swing.JLabel lbl_perawat2;
     private javax.swing.JLabel lbl_shift;
     private javax.swing.JLabel lbl_ttl;
+    private javax.swing.JPanel login2;
     private javax.swing.JLabel nama;
     private javax.swing.JLabel nama_dokter;
     private javax.swing.JLabel nama_klinik;
@@ -666,6 +801,7 @@ public class form_periksa extends javax.swing.JFrame {
     private javax.swing.JLabel nama_klinik2;
     private javax.swing.JLabel nama_klinik3;
     private javax.swing.JLabel nama_rs;
+    private javax.swing.JPanel pemeriksaan;
     private javax.swing.JTable tabel_diagnosis;
     private javax.swing.JTable tabel_obat;
     private javax.swing.JTable tabel_tindakan;

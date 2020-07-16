@@ -5,21 +5,40 @@
  */
 package GUI;
 
+import com.Pasien;
 import exec.ExecuteRekamMedis;
 import java.awt.Color;
+import javax.swing.table.DefaultTableCellRenderer;
 
 /**
  *
  * @author fadil
  */
 public class rekam_medis extends javax.swing.JFrame {
-
+    private static Pasien crpasien;
+    private static ExecuteRekamMedis execRm;
+    private static String[][] dataRekam;
     /**
      * Creates new form rekam_medis
+     * @param psn
      */
-    public rekam_medis() {
+    public rekam_medis(Pasien psn) {
         initComponents();
+        crpasien = psn;
+        set();
         setDataRekam();
+        setting_tabel();
+        jScrollPane1.setOpaque(false);
+        jScrollPane1.getViewport().setOpaque(false);
+        jScrollPane1.setBorder(null);
+        
+        lbl_alamat.setBackground(new Color (0,0,0,0));        
+ 
+    }
+
+    rekam_medis() {
+        initComponents();
+        setDataRekam();        
         jScrollPane1.setOpaque(false);
         jScrollPane1.getViewport().setOpaque(false);
         jScrollPane1.setBorder(null);
@@ -28,13 +47,11 @@ public class rekam_medis extends javax.swing.JFrame {
     }
     
     private void setDataRekam(){
-        ExecuteRekamMedis er = new ExecuteRekamMedis();
-        String[][] dataRekam = er.Rekamtoobjek();
+        execRm = new ExecuteRekamMedis();
+//        dataRekam = execRm.Rekamtoobjek(crpasien.getId_pasien());
+        dataRekam = execRm.Rekamtoobjek(152018010);
         tabel_rekam.setModel(new javax.swing.table.DefaultTableModel(
                 dataRekam,
-//            new Object [][] {
-//                {null, null, null, null, null}
-//            },
             new String [] {
                 "Tanggal", "Dokter", "Jenis", "Deskripsi", "Keterangan"
             }
@@ -43,12 +60,38 @@ public class rekam_medis extends javax.swing.JFrame {
                 false, false, false, false, false
             };
 
+            @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
     }
-
+    
+    private void set() {
+        lbl_alamat.setText(crpasien.getAlamat());
+        lbl_alamat.setEnabled(false);
+        lbl_asuransi.setText(crpasien.getAsuransi());
+        
+        if (crpasien.getGender_pasien().equals("L")) {
+            lbl_gender.setText("Laki-laki");
+        } else {
+            lbl_gender.setText("Perempuan");
+        }
+        
+        lbl_id.setText(""+crpasien.getId_pasien());
+        lbl_nama.setText(crpasien.getNama_pasien());
+        lbl_nik.setText(crpasien.getNik_pasien());
+        lbl_ttl.setText(crpasien.getTtl_pasien());
+    }
+    
+    private void setting_tabel() {
+        tabel_rekam.getColumnModel().getColumn(0).setMinWidth(120);
+        tabel_rekam.getColumnModel().getColumn(0).setMaxWidth(120);
+        tabel_rekam.getColumnModel().getColumn(1).setMinWidth(250);
+        tabel_rekam.getColumnModel().getColumn(1).setMaxWidth(250);
+        tabel_rekam.getColumnModel().getColumn(2).setMinWidth(120);
+        tabel_rekam.getColumnModel().getColumn(2).setMaxWidth(120);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -72,7 +115,7 @@ public class rekam_medis extends javax.swing.JFrame {
         id = new javax.swing.JLabel();
         lbl_id = new javax.swing.JLabel();
         id1 = new javax.swing.JLabel();
-        lbl_id1 = new javax.swing.JLabel();
+        lbl_nik = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         lbl_alamat = new javax.swing.JTextArea();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -136,6 +179,11 @@ public class rekam_medis extends javax.swing.JFrame {
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/Component 13 – 1.png"))); // NOI18N
         jButton1.setBorder(null);
         jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 880, -1, -1));
 
         id.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
@@ -153,10 +201,10 @@ public class rekam_medis extends javax.swing.JFrame {
         id1.setText("NIK Pasien    :");
         getContentPane().add(id1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 320, 160, -1));
 
-        lbl_id1.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
-        lbl_id1.setForeground(new java.awt.Color(112, 112, 112));
-        lbl_id1.setText("654984000000654");
-        getContentPane().add(lbl_id1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 320, 210, -1));
+        lbl_nik.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
+        lbl_nik.setForeground(new java.awt.Color(112, 112, 112));
+        lbl_nik.setText("654984000000654");
+        getContentPane().add(lbl_nik, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 320, 210, -1));
 
         jScrollPane1.setHorizontalScrollBar(null);
 
@@ -197,6 +245,9 @@ public class rekam_medis extends javax.swing.JFrame {
             tabel_rekam.getColumnModel().getColumn(0).setMinWidth(200);
             tabel_rekam.getColumnModel().getColumn(0).setMaxWidth(200);
         }
+        tabel_rekam.setBackground(new Color (0,0,0,0));
+        ((DefaultTableCellRenderer)tabel_rekam.getDefaultRenderer(Object.class)).setBackground(new Color(254,254,254,1));;
+        tabel_rekam.setShowGrid(true);
 
         getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 400, 1330, 460));
         jScrollPane2.setBackground(new Color (0,0,0,0));
@@ -208,6 +259,10 @@ public class rekam_medis extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -258,8 +313,8 @@ public class rekam_medis extends javax.swing.JFrame {
     private javax.swing.JLabel lbl_asuransi;
     private javax.swing.JLabel lbl_gender;
     private javax.swing.JLabel lbl_id;
-    private javax.swing.JLabel lbl_id1;
     private javax.swing.JLabel lbl_nama;
+    private javax.swing.JLabel lbl_nik;
     private javax.swing.JLabel lbl_ttl;
     private javax.swing.JLabel nama;
     private javax.swing.JLabel nama_rs;
