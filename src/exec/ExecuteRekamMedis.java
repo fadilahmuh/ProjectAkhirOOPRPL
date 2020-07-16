@@ -83,20 +83,20 @@ public class ExecuteRekamMedis {
         return dataRekam;
     }
     
-//    public int insertsupplier(Supplier sp){
-//        int hasil = 0;
-//        String query = "Insert into supplier(id_supplier, nama, alamat, email, no_hp)"
-//                + "value("+ sp.getId_supplier()+",'"+ 
-//                sp.getNama()+"','"+ sp.getAlamat()+"','"+sp.getEmail()+"','"+ sp.getNo_hp()+"')";
-//        ConnectionManager conMan = new ConnectionManager();
-//        Connection conn = conMan.logOn();
-//        try {
-//            Statement stm = conn.createStatement();
-//            hasil = stm.executeUpdate(query);
-//        } catch (SQLException ex) {
-//            Logger.getLogger(ExecuteSupplier.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        conMan.logOff();
-//        return hasil;
-//    }
+    public int insertRekam(RekamMedis newRm){
+        int hasil = 0;
+        String query = "Insert into rekam_medis(id_rekam, id_pasien, tanggal, jenis, deskripsi, keterangan, pemeriksa)"
+                + "value("+ newRm.getId_rekam()+","+ 
+                newRm.getId_pasien()+",'"+ newRm.getTanggal()+"','"+newRm.getJenis()+"','"+ newRm.getDeskripsi()+"','"+ newRm.getKeterangan()+"',"+ newRm.getPemeriksa()+")";
+        ConnectionManager conMan = new ConnectionManager();
+        Connection conn = conMan.logOn();
+        try {
+            Statement stm = conn.createStatement();
+            hasil = stm.executeUpdate(query);
+        } catch (SQLException ex) {
+            Logger.getLogger(ExecuteRekamMedis.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        conMan.logOff();
+        return hasil;
+    }
 }
