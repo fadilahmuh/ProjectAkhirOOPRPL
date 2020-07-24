@@ -48,8 +48,7 @@ public class rekam_medis extends javax.swing.JFrame {
     
     private void setDataRekam(){
         execRm = new ExecuteRekamMedis();
-//        dataRekam = execRm.Rekamtoobjek(crpasien.getId_pasien());
-        dataRekam = execRm.Rekamtoobjek(152018010);
+        dataRekam = execRm.Rekamtoobjek(crpasien.getId_pasien());
         tabel_rekam.setModel(new javax.swing.table.DefaultTableModel(
                 dataRekam,
             new String [] {

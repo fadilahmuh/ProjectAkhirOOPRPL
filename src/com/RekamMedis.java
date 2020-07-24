@@ -1,7 +1,7 @@
 package com;
 public class RekamMedis {
     int id_rekam;
-    String jenis,tanggal,keterangan,deskripsi;
+    String jenis,tanggal,keterangan,deskripsi,status;
     Pekerja pemeriksa;
     Pasien pasien;
 
@@ -9,7 +9,7 @@ public class RekamMedis {
     public RekamMedis() {
     }
 //constructor full
-    public RekamMedis(int id_rekam, int fid_pasien, String obat, String jenis, String tanggal, String keterangan, String deskripsi, Pekerja pemeriksa, Pasien id_pasien) {
+    public RekamMedis(int id_rekam, int fid_pasien, String obat, String jenis, String tanggal, String keterangan, String deskripsi, Pekerja pemeriksa, Pasien id_pasien,String status) {
         this.id_rekam = id_rekam;
         this.jenis = jenis;
         this.tanggal = tanggal;
@@ -17,6 +17,7 @@ public class RekamMedis {
         this.deskripsi = deskripsi;
         this.pemeriksa = pemeriksa;
         this.pasien = id_pasien;
+        this.status = status;
     }
     
 //getter and setter
@@ -75,11 +76,18 @@ public class RekamMedis {
     public void setPasien(Pasien id_pasien) {
         this.pasien = id_pasien;
     }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+        
 //toString
     @Override
     public String toString() {
-        return "RekamMedis{" + "id_rekam=" + id_rekam  + ", jenis=" + jenis + ", tanggal=" + tanggal + ", keterangan=" + keterangan + ", deskripsi=" + deskripsi + ", pemeriksa=" + pemeriksa + ", pasien=" + pasien + '}';
-    }
-    
-    
+        return "RekamMedis{" + "id_rekam=" + id_rekam + ", jenis=" + jenis + ", tanggal=" + tanggal + ", keterangan=" + keterangan + ", deskripsi=" + deskripsi + ", status=" + status + ", pemeriksa=" + pemeriksa + ", pasien=" + pasien + '}';
+    }            
 }

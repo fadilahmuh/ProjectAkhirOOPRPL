@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS `pasien` (
   `no_telp` char(15) DEFAULT NULL,
   `alamat` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id_pasien`)
-) ENGINE=InnoDB AUTO_INCREMENT=152018011 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=152018012 DEFAULT CHARSET=utf8mb4;
 
 -- Dumping data for table rumahsakit.pasien: ~0 rows (approximately)
 /*!40000 ALTER TABLE `pasien` DISABLE KEYS */;
@@ -75,9 +75,10 @@ CREATE TABLE IF NOT EXISTS `pekerja` (
 -- Dumping data for table rumahsakit.pekerja: ~3 rows (approximately)
 /*!40000 ALTER TABLE `pekerja` DISABLE KEYS */;
 INSERT INTO `pekerja` (`id_pekerja`, `password`, `nama`, `posisi`, `gender_pkrj`, `ttl_pkrj`, `alamat_tinggal`, `gaji_pokok`, `unit_kerja`) VALUES
+	(152018001, 'dokter', 'Peni M M Peni', 'Dokter', 'L', 'Bandung, 04/08/2020', 'Ujung Berung', 100000000, 3),
 	(152018002, 'fadil', 'Fannie M Fadilah S', 'Perawat', 'L', 'Bandung, 00/00/0000', 'Dihatimuu UWUUU', 5000000, NULL),
-	(152018020, '321', 'Earlangga Adalah Telingalangga', 'Dokter', 'L', 'Bandung, 04/07/2020', 'Disana jauh gaboleh ikut', 8000000, 1),
-	(152018023, '321654', 'M Nadhif', 'Perawat', 'L', 'Serang, 00/00/0000', 'Ujung kulon dunia', 5000000, NULL);
+	(152018020, 'asd', 'Erlangga Ardhi', 'Dokter', 'L', 'Bandung, 04/07/2020', 'Deket buah batu lah pkonnya mah', 8000000, 1),
+	(152018023, '321654', 'Abizar Nadhif', 'Perawat', 'L', 'Serang, 00/00/0000', 'Ujung kulon dunia', 5000000, NULL);
 /*!40000 ALTER TABLE `pekerja` ENABLE KEYS */;
 
 -- Dumping structure for table rumahsakit.rekam_medis
@@ -91,6 +92,7 @@ CREATE TABLE IF NOT EXISTS `rekam_medis` (
   `pemeriksa` int(11) NOT NULL,
   `obat` char(10) DEFAULT NULL,
   `tindakan` char(10) DEFAULT NULL,
+  `status` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id_rekam`),
   KEY `FK_rekam_medis_pasien` (`id_pasien`),
   KEY `FK_rekam_medis_pekerja` (`pemeriksa`),
@@ -100,20 +102,28 @@ CREATE TABLE IF NOT EXISTS `rekam_medis` (
   CONSTRAINT `FK_rekam_medis_pasien` FOREIGN KEY (`id_pasien`) REFERENCES `pasien` (`id_pasien`) ON UPDATE CASCADE,
   CONSTRAINT `FK_rekam_medis_pekerja` FOREIGN KEY (`pemeriksa`) REFERENCES `pekerja` (`id_pekerja`) ON UPDATE CASCADE,
   CONSTRAINT `FK_rekam_medis_tindakan` FOREIGN KEY (`tindakan`) REFERENCES `tindakan` (`id_tindakan`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table rumahsakit.rekam_medis: ~5 rows (approximately)
+-- Dumping data for table rumahsakit.rekam_medis: ~22 rows (approximately)
 /*!40000 ALTER TABLE `rekam_medis` DISABLE KEYS */;
-INSERT INTO `rekam_medis` (`id_rekam`, `id_pasien`, `tanggal`, `jenis`, `deskripsi`, `keterangan`, `pemeriksa`, `obat`, `tindakan`) VALUES
-	(14, 152018010, '13/07/2020', 'Diagnosis', 'Nyeri sudah 3 hari', 'sudah minum obat tradisional', 152018020, NULL, NULL),
-	(15, 152018010, '15/07/2020', 'Diagnosis', 'Karang gigi', 'Graham kanan bawah', 152018020, NULL, NULL),
-	(16, 152018010, '15/07/2020', 'Diagnosis', 'Lubang gigi taring atas', 'harus tambal', 152018020, NULL, NULL),
-	(18, 152018010, '15/07/2020', 'Tindakan', NULL, '2 lubang', 152018020, NULL, 'TN-G1'),
-	(19, 152018010, '15/07/2020', 'Obat', NULL, 'Pereda nyeri, setiap sebelum makan', 152018020, 'OB-M4', NULL),
-	(20, 152018010, '16/08/2020', 'Diagnosis', 'TikTok Syndrome', 'Harus operasi otak', 152018020, NULL, NULL),
-	(21, 152018010, '16/07/2020', 'Diagnosis', 'test desc diag', 'keterangan diag', 152018020, NULL, NULL),
-	(22, 152018010, '16/07/2020', 'Tindakan', NULL, 'semen biru', 152018020, NULL, 'TN-G1'),
-	(23, 152018010, '16/07/2020', 'Obat', NULL, '20mg, 3x sehari', 152018020, 'OB-M1', NULL);
+INSERT INTO `rekam_medis` (`id_rekam`, `id_pasien`, `tanggal`, `jenis`, `deskripsi`, `keterangan`, `pemeriksa`, `obat`, `tindakan`, `status`) VALUES
+	(14, 152018010, '13/07/2020', 'Diagnosis', 'Nyeri sudah 3 hari', 'sudah minum obat tradisional', 152018020, NULL, NULL, 'Asli'),
+	(15, 152018010, '15/07/2020', 'Diagnosis', 'Karang gigi', 'Graham kanan bawah', 152018020, NULL, NULL, 'Asli'),
+	(16, 152018010, '15/07/2020', 'Diagnosis', 'Lubang gigi taring atas', 'harus tambal', 152018020, NULL, NULL, 'Asli'),
+	(18, 152018010, '15/07/2020', 'Tindakan', NULL, '2 lubang', 152018020, NULL, 'TN-G1', 'Asli'),
+	(19, 152018010, '15/07/2020', 'Obat', NULL, 'Pereda nyeri, setiap sebelum makan', 152018020, 'OB-M4', NULL, 'Asli'),
+	(20, 152018010, '16/08/2020', 'Diagnosis', 'TikTok Syndrome', 'Harus operasi otak', 152018020, NULL, NULL, 'Asli'),
+	(21, 152018010, '16/07/2020', 'Diagnosis', 'test desc diag', 'keterangan diag', 152018020, NULL, NULL, 'Asli'),
+	(22, 152018010, '16/07/2020', 'Tindakan', NULL, 'semen biru', 152018020, NULL, 'TN-G1', 'Asli'),
+	(23, 152018010, '16/07/2020', 'Obat', NULL, '20mg, 3x sehari', 152018020, 'OB-M1', NULL, 'Asli'),
+	(24, 152018010, '16/07/2020', 'Diagnosis', 'test test', '123', 152018020, NULL, NULL, 'Asli'),
+	(25, 152018010, '16/07/2020', 'Tindakan', NULL, 'test aja', 152018020, NULL, 'TN-G2', 'Asli'),
+	(26, 152018010, '16/07/2020', 'Diagnosis', 'test lagi', '123', 152018020, NULL, NULL, 'Asli'),
+	(27, 152018010, '16/07/2020', 'Tindakan', NULL, 'biar kinclhongg', 152018020, NULL, 'TN-G3', 'Asli'),
+	(28, 152018010, '17/07/2020', 'Diagnosis', 'diagnosis bingung', 'kalo ngga ada strip aja', 152018020, NULL, NULL, 'Asli'),
+	(29, 152018010, '17/07/2020', 'Diagnosis', 'kalo kosong error', 'jk', 152018020, NULL, NULL, 'Asli'),
+	(30, 152018010, '17/07/2020', 'Tindakan', NULL, 'harus', 152018020, NULL, 'TN-G2', 'Asli'),
+	(31, 152018010, '17/07/2020', 'Obat', NULL, '2pcs', 152018020, 'OB-M4', NULL, 'Asli');
 /*!40000 ALTER TABLE `rekam_medis` ENABLE KEYS */;
 
 -- Dumping structure for table rumahsakit.tindakan
@@ -127,7 +137,7 @@ CREATE TABLE IF NOT EXISTS `tindakan` (
   CONSTRAINT `FK_tindakan_unit` FOREIGN KEY (`unit_pengguna`) REFERENCES `unit` (`kd_unit`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table rumahsakit.tindakan: ~4 rows (approximately)
+-- Dumping data for table rumahsakit.tindakan: ~3 rows (approximately)
 /*!40000 ALTER TABLE `tindakan` DISABLE KEYS */;
 INSERT INTO `tindakan` (`id_tindakan`, `unit_pengguna`, `nama_tindakan`, `harga_tindakan`) VALUES
 	('TN-G1', 1, 'Tambal Gigi', 200000),

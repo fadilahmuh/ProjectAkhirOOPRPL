@@ -7,6 +7,8 @@ package GUI;
 
 import com.Pekerja;
 import exec.ExecutePekerja;
+import java.util.List;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
 /**
@@ -15,13 +17,29 @@ import javax.swing.JOptionPane;
  */
 public class login extends javax.swing.JFrame {
     private static ExecutePekerja execPkj;
+    private static Pekerja selPkj;
     /**
      * Creates new form login
      */
     public login() {
-        initComponents();       
+        initComponents();
+        setcbbpkj();
+        setting.hide();
     }
-
+    
+    
+    private void setcbbpkj() {
+        execPkj = new ExecutePekerja();
+        
+        List<Pekerja> listPkj = execPkj.getListPkj();      
+        String[] listpkj2 = new String[listPkj.size()+1];
+        listpkj2[0] = "-";
+        for (int i = 1; i < listpkj2.length; i++) {
+            listpkj2[i] = String.valueOf(listPkj.get(i-1).getId_pekerja());
+        }     
+        DefaultComboBoxModel model = new DefaultComboBoxModel(listpkj2);
+        cbb_listpkj.setModel(model);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -31,22 +49,52 @@ public class login extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        login = new javax.swing.JPanel();
         nama_rs = new javax.swing.JLabel();
-        field_username = new javax.swing.JTextField();
-        btn_login = new javax.swing.JButton();
         field_pass = new javax.swing.JPasswordField();
+        btn_login = new javax.swing.JButton();
+        field_username = new javax.swing.JTextField();
+        btn_setting = new javax.swing.JLabel();
+        setting = new javax.swing.JPanel();
+        jButton2 = new javax.swing.JButton();
+        cbb_gender = new javax.swing.JComboBox();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        field_posisi = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
+        field_ttl = new javax.swing.JLabel();
+        cbb_listpkj = new javax.swing.JComboBox();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        field_nama = new javax.swing.JTextField();
+        jScrollPane9 = new javax.swing.JScrollPane();
+        field_alamat = new javax.swing.JTextArea();
+        jLabel11 = new javax.swing.JLabel();
+        field_pass1 = new javax.swing.JPasswordField();
+        jLabel15 = new javax.swing.JLabel();
+        field_pass2 = new javax.swing.JPasswordField();
+        jButton7 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
         background_login = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jPanel1.setOpaque(false);
+        jPanel1.setLayout(new java.awt.CardLayout());
+
+        login.setOpaque(false);
+        login.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
         nama_rs.setFont(new java.awt.Font("Dialog", 1, 48)); // NOI18N
         nama_rs.setForeground(new java.awt.Color(112, 112, 112));
         nama_rs.setText("Rumah Sakit Al-Boromeous");
-        getContentPane().add(nama_rs, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 30, -1, -1));
+        login.add(nama_rs, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 30, -1, -1));
 
-        field_username.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        getContentPane().add(field_username, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 340, 230, 30));
+        field_pass.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        login.add(field_pass, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 420, 230, 30));
 
         btn_login.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/Component 1 – 1.png"))); // NOI18N
         btn_login.setBorder(null);
@@ -56,10 +104,113 @@ public class login extends javax.swing.JFrame {
                 btn_loginActionPerformed(evt);
             }
         });
-        getContentPane().add(btn_login, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 540, -1, -1));
+        login.add(btn_login, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 540, -1, -1));
 
-        field_pass.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        getContentPane().add(field_pass, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 420, 230, 30));
+        field_username.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        login.add(field_username, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 340, 230, 30));
+
+        btn_setting.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/settings.png"))); // NOI18N
+        btn_setting.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_settingMouseClicked(evt);
+            }
+        });
+        login.add(btn_setting, new org.netbeans.lib.awtextra.AbsoluteConstraints(1380, 820, 50, 50));
+
+        jPanel1.add(login, "card2");
+
+        setting.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/Component 13 – 1.png"))); // NOI18N
+        jButton2.setBorder(null);
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        setting.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 810, -1, -1));
+
+        cbb_gender.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
+        cbb_gender.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "L", "P" }));
+        setting.add(cbb_gender, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 310, 100, -1));
+
+        jLabel8.setFont(new java.awt.Font("Consolas", 1, 20)); // NOI18N
+        jLabel8.setText("Nama");
+        setting.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 250, -1, 30));
+
+        jLabel9.setFont(new java.awt.Font("Consolas", 1, 20)); // NOI18N
+        jLabel9.setText("Id Pekerja");
+        setting.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 110, -1, 30));
+
+        field_posisi.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
+        field_posisi.setEnabled(false);
+        setting.add(field_posisi, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 320, 290, -1));
+
+        jLabel10.setFont(new java.awt.Font("Consolas", 1, 20)); // NOI18N
+        jLabel10.setText("Posisi");
+        setting.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 320, -1, 30));
+
+        field_ttl.setFont(new java.awt.Font("Consolas", 1, 20)); // NOI18N
+        field_ttl.setText("-");
+        setting.add(field_ttl, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 240, 270, 30));
+
+        cbb_listpkj.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
+        cbb_listpkj.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbb_listpkj.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbb_listpkjActionPerformed(evt);
+            }
+        });
+        setting.add(cbb_listpkj, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 110, 290, -1));
+
+        jLabel12.setFont(new java.awt.Font("Consolas", 1, 20)); // NOI18N
+        jLabel12.setText("Gender");
+        setting.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 310, -1, 30));
+
+        jLabel13.setFont(new java.awt.Font("Consolas", 1, 20)); // NOI18N
+        jLabel13.setText("Alamat");
+        setting.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 390, -1, 30));
+
+        jLabel14.setFont(new java.awt.Font("Consolas", 1, 20)); // NOI18N
+        jLabel14.setText("TTL");
+        setting.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 240, -1, 30));
+
+        field_nama.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
+        setting.add(field_nama, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 250, 290, -1));
+
+        field_alamat.setColumns(20);
+        field_alamat.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
+        field_alamat.setLineWrap(true);
+        field_alamat.setRows(3);
+        jScrollPane9.setViewportView(field_alamat);
+
+        setting.add(jScrollPane9, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 390, 270, 90));
+
+        jLabel11.setFont(new java.awt.Font("Consolas", 1, 20)); // NOI18N
+        jLabel11.setText("Password");
+        setting.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 400, -1, 30));
+        setting.add(field_pass1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 400, 290, 30));
+
+        jLabel15.setFont(new java.awt.Font("Consolas", 1, 20)); // NOI18N
+        jLabel15.setText("Konfirmasi Password");
+        setting.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(1160, 690, -1, 30));
+        setting.add(field_pass2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1120, 730, 290, 30));
+
+        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/Component 13 – 2.png"))); // NOI18N
+        jButton7.setBorder(null);
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
+        setting.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(1270, 790, -1, -1));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/bg.png"))); // NOI18N
+        setting.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1440, 880));
+
+        jPanel1.add(setting, "card3");
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1440, 880));
 
         background_login.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/Web 1920 – 2.png"))); // NOI18N
         getContentPane().add(background_login, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1440, 880));
@@ -73,16 +224,66 @@ public class login extends javax.swing.JFrame {
         Pekerja akun = execPkj.getPekerja(Integer.valueOf(field_username.getText()));
         
         if (!(akun.getPassword().equals(field_pass.getText()))) {
-            JOptionPane.showMessageDialog(rootPane, "Password salah!!");
+            JOptionPane.showMessageDialog(rootPane, "Password salah!!");        
         }else if(!(akun.getPosisi().equals("Dokter"))) {
              JOptionPane.showMessageDialog(rootPane, "Login gagal, ID tidak terdaftar sebagai Dokter!!");
         } else if (akun.getId_pekerja() != 0 && akun.getPassword().equals(field_pass.getText()) && akun.getPosisi().equals("Dokter")) {
             dispose();
             new main_form(akun).setVisible(true);
-        }
-        
-        
+        }                
     }//GEN-LAST:event_btn_loginActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        login.show();
+        setting.hide();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void cbb_listpkjActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbb_listpkjActionPerformed
+        if (cbb_listpkj.getSelectedItem().equals("-")) {
+            field_alamat.setText("-");
+            field_nama.setText("-");
+            field_posisi.setText("-");
+            field_ttl.setText("-");
+        } else {
+            execPkj = new ExecutePekerja();
+            selPkj = execPkj.getPekerja(Integer.valueOf(cbb_listpkj.getSelectedItem().toString()));
+            
+            field_alamat.setText(selPkj.getAlamat_tinggal());
+            field_nama.setText(selPkj.getNama());
+            field_posisi.setText(selPkj.getPosisi());
+            field_ttl.setText(selPkj.getTtl_pkrj());
+            field_pass1.setText(selPkj.getPassword());
+            cbb_gender.setSelectedItem(selPkj.getGender_pkrj());
+        }
+    }//GEN-LAST:event_cbb_listpkjActionPerformed
+
+    private void btn_settingMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_settingMouseClicked
+        login.hide();
+        setting.show();
+    }//GEN-LAST:event_btn_settingMouseClicked
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        if (field_pass2.getText().equals("") ){
+            JOptionPane.showMessageDialog(rootPane, "Masukan Password Asal!");   
+        } else if (!(field_pass2.getText().equals(selPkj.getPassword()))) {
+            JOptionPane.showMessageDialog(rootPane, "Password salah!!");
+        } else {
+            execPkj = new ExecutePekerja();
+            Pekerja newPkj = selPkj;
+            newPkj.setAlamat_tinggal(field_alamat.getText());
+            newPkj.setNama(field_nama.getText());
+            newPkj.setPassword(field_pass1.getText());
+            int hasil = execPkj.updatePekerja(newPkj);
+            if (hasil == 1) {
+                JOptionPane.showMessageDialog(rootPane, "Update data berhasil !");
+                cbb_listpkj.setSelectedIndex(0);
+                setting.hide();
+                login.show();
+            } else  {
+                JOptionPane.showMessageDialog(rootPane, "Update data gagal!!");
+            }
+        }
+    }//GEN-LAST:event_jButton7ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -122,8 +323,32 @@ public class login extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel background_login;
     private javax.swing.JButton btn_login;
+    private javax.swing.JLabel btn_setting;
+    private javax.swing.JComboBox cbb_gender;
+    private javax.swing.JComboBox cbb_listpkj;
+    private javax.swing.JTextArea field_alamat;
+    private javax.swing.JTextField field_nama;
     private javax.swing.JPasswordField field_pass;
+    private javax.swing.JPasswordField field_pass1;
+    private javax.swing.JPasswordField field_pass2;
+    private javax.swing.JTextField field_posisi;
+    private javax.swing.JLabel field_ttl;
     private javax.swing.JTextField field_username;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton7;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane9;
+    private javax.swing.JPanel login;
     private javax.swing.JLabel nama_rs;
+    private javax.swing.JPanel setting;
     // End of variables declaration//GEN-END:variables
 }

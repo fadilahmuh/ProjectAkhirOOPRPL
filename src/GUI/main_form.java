@@ -36,12 +36,14 @@ import javax.swing.table.DefaultTableModel;
 public class main_form extends javax.swing.JFrame {
     private static Pekerja dokter,prt1,prt2;
     private static Pasien psn;
-    private static String sf;
+    private static String sf,tanggal;
+    private static RekamMedis selRkm,newRkm;
     private static ExecutePekerja execPkj;
     private static ExecutePasien execPsn;
     private static ExecuteObat execObt;
     private static ExecuteTindakan execTnd;
     private static ExecuteRekamMedis execRkm;
+    private static String[][] dataRekam;
     
     
     
@@ -54,16 +56,21 @@ public class main_form extends javax.swing.JFrame {
         initComponents();
         login2.show();
         dokter = dkt;
+        addition.hide();
+        DateTimeFormatter fd = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        tanggal = fd.format(LocalDateTime.now());
 
         set_dok();
         set_cbbobat();
         set_cbbtndk();
+        set_cbbrekpas();
+        set_cbbperaw1();
     }
 
     private main_form() {
         initComponents();
-        set_cbbobat();
-        set_cbbtndk();
+        set_cbbrekpas();
+        addition.hide();
     }
     
     private void set_dok() {
@@ -98,6 +105,7 @@ public class main_form extends javax.swing.JFrame {
         }     
         DefaultComboBoxModel model = new DefaultComboBoxModel(listobt2);
         cbb_obat.setModel(model);  
+        jComboBox2.setModel(model);
     }
     private void set_cbbtndk() {
         execTnd = new ExecuteTindakan();
@@ -108,7 +116,8 @@ public class main_form extends javax.swing.JFrame {
             listtnd2[i] = listTnd.get(i).getNama_tindakan() + ", " + listTnd.get(i).getId_tindakan();
         }     
         DefaultComboBoxModel model = new DefaultComboBoxModel(listtnd2);
-        cbb_tindakan.setModel(model);  
+        cbb_tindakan.setModel(model);
+        jComboBox1.setModel(model);
     }
     private void set_lblpasiem() {
         lbl_id.setText(String.valueOf(psn.getId_pasien()));
@@ -134,6 +143,52 @@ public class main_form extends javax.swing.JFrame {
         to.setRowCount(0);
         to.addRow(new Object[]{});
     }
+    private void set_cbbrekpas() {
+        execRkm = new ExecuteRekamMedis();
+        
+        List<String> listNama = execRkm.getRekamPasien(dokter.getId_pekerja(),tanggal);      
+        String[] listbnd2 = new String[listNama.size()+1];
+        listbnd2[0] = "-";
+        for (int i = 1; i < listbnd2.length; i++) {
+            listbnd2[i] = listNama.get(i-1);
+        }     
+        DefaultComboBoxModel model = new DefaultComboBoxModel(listbnd2);
+        cbb_pasien.setModel(model);
+    }
+    private void set_cbbperaw1() {
+        execPkj = new ExecutePekerja();
+        
+        List<Pekerja> listPkj = execPkj.getPerawat(0);      
+        String[] listpkj2 = new String[listPkj.size()+1];
+        listpkj2[0] = "-";
+        for (int i = 1; i < listpkj2.length; i++) {
+            String[] nama = listPkj.get(i-1).getNama().split(" ");
+            listpkj2[i] = String.valueOf(listPkj.get(i-1).getId_pekerja()) +", "+ nama[0];
+        }     
+        DefaultComboBoxModel model = new DefaultComboBoxModel(listpkj2);
+        cbb_pera1.setModel(model);
+    }
+    private void set_cbbperaw2(int id) {
+        execPkj = new ExecutePekerja();
+        
+        List<Pekerja> listPkj = execPkj.getPerawat(id);      
+        String[] listpkj2 = new String[listPkj.size()+1];
+        listpkj2[0] = "-";
+        for (int i = 1; i < listpkj2.length; i++) {
+            String[] nama = listPkj.get(i-1).getNama().split(" ");
+            listpkj2[i] = String.valueOf(listPkj.get(i-1).getId_pekerja()) +", "+ nama[0];
+        }     
+        DefaultComboBoxModel model = new DefaultComboBoxModel(listpkj2);
+        cbb_pera2.setModel(model);
+    }
+    private void setDataRekam(int id){
+
+        execRkm = new ExecuteRekamMedis();
+        List<RekamMedis> listRkm = execRkm.getRekam2(id,dokter.getId_pekerja(),tanggal);
+        DefaultTableModel model = execRkm.Rekamtoobjek(listRkm);
+ 
+        jTable1.setModel(model);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -157,9 +212,9 @@ public class main_form extends javax.swing.JFrame {
         login2 = new javax.swing.JPanel();
         field_idpasien = new javax.swing.JTextField();
         btn_next = new javax.swing.JButton();
-        field_prwt1 = new javax.swing.JTextField();
-        field_prwt2 = new javax.swing.JTextField();
-        btn_set = new javax.swing.JButton();
+        cbb_pera2 = new javax.swing.JComboBox();
+        cbb_pera1 = new javax.swing.JComboBox();
+        btn_rekam = new javax.swing.JLabel();
         bg_body1 = new javax.swing.JLabel();
         pemeriksaan = new javax.swing.JPanel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
@@ -195,6 +250,28 @@ public class main_form extends javax.swing.JFrame {
         btn_selesai1 = new javax.swing.JButton();
         btn_selesai = new javax.swing.JButton();
         background_periksa = new javax.swing.JLabel();
+        addition = new javax.swing.JPanel();
+        edit_rekam = new javax.swing.JPanel();
+        jButton6 = new javax.swing.JButton();
+        cbb_pasien = new javax.swing.JComboBox();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        field_id = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        field_jenis = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jComboBox2 = new javax.swing.JComboBox();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        field_desc = new javax.swing.JTextArea();
+        jScrollPane8 = new javax.swing.JScrollPane();
+        field_ket = new javax.swing.JTextArea();
+        btn_update = new javax.swing.JButton();
+        btn_delete = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -228,12 +305,12 @@ public class main_form extends javax.swing.JFrame {
 
         lbl_perawat1.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
         lbl_perawat1.setForeground(new java.awt.Color(112, 112, 112));
-        lbl_perawat1.setText("1. ABCDEFGHIJKL");
+        lbl_perawat1.setText("1. -");
         header.add(lbl_perawat1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1220, 70, 210, -1));
 
         lbl_perawat2.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
         lbl_perawat2.setForeground(new java.awt.Color(112, 112, 112));
-        lbl_perawat2.setText("2. LKJIHGFEDCBA");
+        lbl_perawat2.setText("2. -");
         header.add(lbl_perawat2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1220, 100, 210, -1));
 
         bg_header.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/header.png"))); // NOI18N
@@ -258,21 +335,32 @@ public class main_form extends javax.swing.JFrame {
         });
         login2.add(btn_next, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 240, -1, -1));
 
-        field_prwt1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        login2.add(field_prwt1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 470, 230, 30));
-
-        field_prwt2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        login2.add(field_prwt2, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 540, 230, 30));
-
-        btn_set.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/Component 2 – 1.png"))); // NOI18N
-        btn_set.setBorder(null);
-        btn_set.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btn_set.addActionListener(new java.awt.event.ActionListener() {
+        cbb_pera2.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
+        cbb_pera2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-" }));
+        cbb_pera2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_setActionPerformed(evt);
+                cbb_pera2ActionPerformed(evt);
             }
         });
-        login2.add(btn_set, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 600, -1, -1));
+        login2.add(cbb_pera2, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 530, 330, -1));
+
+        cbb_pera1.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
+        cbb_pera1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbb_pera1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbb_pera1ActionPerformed(evt);
+            }
+        });
+        login2.add(cbb_pera1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 460, 330, -1));
+
+        btn_rekam.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/open-book.png"))); // NOI18N
+        btn_rekam.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_rekam.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_rekamMouseClicked(evt);
+            }
+        });
+        login2.add(btn_rekam, new org.netbeans.lib.awtextra.AbsoluteConstraints(1380, 630, 50, 50));
 
         bg_body1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/body1.png"))); // NOI18N
         login2.add(bg_body1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -10, -1, 700));
@@ -661,6 +749,133 @@ public class main_form extends javax.swing.JFrame {
 
         getContentPane().add(body, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 160, 1440, 690));
 
+        addition.setLayout(new java.awt.CardLayout());
+
+        edit_rekam.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/Component 13 – 1.png"))); // NOI18N
+        jButton6.setBorder(null);
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+        edit_rekam.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 770, -1, -1));
+
+        cbb_pasien.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbb_pasien.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbb_pasienActionPerformed(evt);
+            }
+        });
+        edit_rekam.add(cbb_pasien, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 560, -1));
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
+        jScrollPane4.setViewportView(jTable1);
+
+        edit_rekam.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 1380, 210));
+
+        field_id.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
+        field_id.setEnabled(false);
+        edit_rekam.add(field_id, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 380, 160, -1));
+
+        jLabel2.setFont(new java.awt.Font("Consolas", 1, 20)); // NOI18N
+        jLabel2.setText("ID");
+        edit_rekam.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 380, -1, 30));
+
+        jComboBox1.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        edit_rekam.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 470, 280, -1));
+
+        jLabel3.setFont(new java.awt.Font("Consolas", 1, 20)); // NOI18N
+        jLabel3.setText("Deskripsi");
+        edit_rekam.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 470, -1, 30));
+
+        jLabel4.setFont(new java.awt.Font("Consolas", 1, 20)); // NOI18N
+        jLabel4.setText("Keterangan");
+        edit_rekam.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 610, -1, 30));
+
+        field_jenis.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
+        field_jenis.setEnabled(false);
+        edit_rekam.add(field_jenis, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 380, 160, -1));
+
+        jLabel5.setFont(new java.awt.Font("Consolas", 1, 20)); // NOI18N
+        jLabel5.setText("Tindakan");
+        edit_rekam.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 470, -1, 30));
+
+        jLabel6.setFont(new java.awt.Font("Consolas", 1, 20)); // NOI18N
+        jLabel6.setText("Jenis");
+        edit_rekam.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 380, -1, 30));
+
+        jLabel7.setFont(new java.awt.Font("Consolas", 1, 20)); // NOI18N
+        jLabel7.setText("Obat");
+        edit_rekam.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 570, -1, 30));
+
+        jComboBox2.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        edit_rekam.add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 570, 280, -1));
+
+        field_desc.setColumns(20);
+        field_desc.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
+        field_desc.setLineWrap(true);
+        field_desc.setRows(3);
+        jScrollPane7.setViewportView(field_desc);
+
+        edit_rekam.add(jScrollPane7, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 470, 270, 90));
+
+        field_ket.setColumns(20);
+        field_ket.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
+        field_ket.setLineWrap(true);
+        field_ket.setRows(3);
+        jScrollPane8.setViewportView(field_ket);
+
+        edit_rekam.add(jScrollPane8, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 610, 270, 90));
+
+        btn_update.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/Component 13 – 2.png"))); // NOI18N
+        btn_update.setBorder(null);
+        btn_update.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_updateActionPerformed(evt);
+            }
+        });
+        edit_rekam.add(btn_update, new org.netbeans.lib.awtextra.AbsoluteConstraints(1090, 750, -1, -1));
+
+        btn_delete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/Component 13 – 3.png"))); // NOI18N
+        btn_delete.setBorder(null);
+        btn_delete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_deleteActionPerformed(evt);
+            }
+        });
+        edit_rekam.add(btn_delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(1260, 750, -1, -1));
+
+        addition.add(edit_rekam, "card2");
+
+        getContentPane().add(addition, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1440, 850));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -700,44 +915,16 @@ public class main_form extends javax.swing.JFrame {
 
         psn = execPsn.getPasien(Integer.valueOf(field_idpasien.getText()));
         if (psn.getId_pasien()!= 0){
+            addition.hide();
             login2.hide();
             pemeriksaan.show();
             set_lblpasiem();
             field_idpasien.setText("");
+            jTabbedPane1.setSelectedIndex(0);
         } else {
             JOptionPane.showMessageDialog(rootPane, "Cek kembali ID Pasien !!");
         }
     }//GEN-LAST:event_btn_nextActionPerformed
-
-    private void btn_setActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_setActionPerformed
-        execPkj = new ExecutePekerja();
-
-        if (!(field_prwt1.getText().equals(""))) {
-            prt1 = execPkj.getPekerja(Integer.valueOf(field_prwt1.getText()));
-            if (prt1.getId_pekerja() != 0  && prt1.getPosisi().equals("Perawat") ){
-                String[] sprt1 = prt1.getNama().split(" ");
-                lbl_perawat1.setText("1. " + sprt1[0] + " " + sprt1[1]);
-            } else {
-                JOptionPane.showMessageDialog(rootPane, "Cek kembali ID Perawat 1 !!");
-                lbl_perawat1.setText("-");
-            }
-        }
-
-        if (!(field_prwt2.getText().equals(""))) {
-            prt2 = execPkj.getPekerja(Integer.valueOf(field_prwt2.getText()));
-            if (prt2.getId_pekerja() != 0  && prt2.getPosisi().equals("Perawat") ){
-                String[] sprt2 = prt2.getNama().split(" ");
-                lbl_perawat2.setText("2. " + sprt2[0] + " " + sprt2[1]);
-            } else {
-                JOptionPane.showMessageDialog(rootPane, "Cek kembali ID Perawat 2 !!");
-                lbl_perawat2.setText("-");
-            }
-        }else {
-            prt2 = new Pekerja();
-            lbl_perawat2.setText("-");
-        }
-
-    }//GEN-LAST:event_btn_setActionPerformed
 
     private void btn_selesai1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_selesai1ActionPerformed
         login2.show();
@@ -745,9 +932,7 @@ public class main_form extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_selesai1ActionPerformed
 
     private void btn_selesaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_selesaiActionPerformed
-        List<RekamMedis> newRm = new ArrayList<>();
-        DateTimeFormatter fd = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        String tanggal = fd.format(LocalDateTime.now());
+        List<RekamMedis> newRm = new ArrayList<>();        
         
         int row = tabel_diagnosis.getRowCount();        
         for (int i = 0; i < row; i++) {
@@ -761,7 +946,8 @@ public class main_form extends javax.swing.JFrame {
             rm.setJenis("Diagnosis");
             rm.setKeterangan(tabel_diagnosis.getValueAt( i, 1).toString());              
             rm.setPemeriksa(dokter);
-            rm.setTanggal(tanggal);            
+            rm.setTanggal(tanggal); 
+            rm.setStatus("Asli");
             newRm.add(rm);
         }
         
@@ -779,6 +965,7 @@ public class main_form extends javax.swing.JFrame {
             rm.setKeterangan(tabel_tindakan.getValueAt( i, 1).toString());
             rm.setPemeriksa(dokter);
             rm.setTanggal(tanggal);            
+            rm.setStatus("Asli");
             newRm.add(rm);   
         }
         row = tabel_obat.getRowCount();        
@@ -795,6 +982,7 @@ public class main_form extends javax.swing.JFrame {
             rm.setKeterangan(tabel_obat.getValueAt( i, 1).toString());
             rm.setPemeriksa(dokter);
             rm.setTanggal(tanggal);            
+            rm.setStatus("Asli");
             newRm.add(rm);   
         }
 
@@ -808,7 +996,148 @@ public class main_form extends javax.swing.JFrame {
                 login2.show();
                 pemeriksaan.hide();
         }
+        
+        set_cbbrekpas();
     }//GEN-LAST:event_btn_selesaiActionPerformed
+
+    private void btn_rekamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_rekamMouseClicked
+        addition.show();
+        edit_rekam.show();
+        header.hide();
+        body.hide();
+    }//GEN-LAST:event_btn_rekamMouseClicked
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        edit_rekam.hide();
+        addition.hide();
+        header.show();
+        body.show();
+        login2.show();
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void cbb_pasienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbb_pasienActionPerformed
+        if (!(cbb_pasien.getSelectedItem().equals("-"))) {
+            String[] pilih = cbb_pasien.getSelectedItem().toString().split(", ");
+            int id = Integer.valueOf(pilih[0]);
+            setDataRekam(id);
+        } else {
+            jTable1.setModel(new javax.swing.table.DefaultTableModel(
+    new Object [][] {
+        {null, null, null, null},
+        {null, null, null, null},
+        {null, null, null, null},
+        {null, null, null, null}
+    },
+    new String [] {
+        "Title 1", "Title 2", "Title 3", "Title 4"
+    }
+));
+        }
+    }//GEN-LAST:event_cbb_pasienActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        int row = jTable1.getSelectedRow();
+        execRkm = new ExecuteRekamMedis();
+        selRkm = execRkm.getItemRekam(Integer.valueOf(jTable1.getValueAt(row, 0).toString()));
+        System.out.println(selRkm.toString());
+        field_id.setText(jTable1.getValueAt(row, 0).toString());
+        field_ket.setText(jTable1.getValueAt(row, 3).toString());
+        field_jenis.setText(jTable1.getValueAt(row, 1).toString());
+        if (field_jenis.getText().equals("Diagnosis")) {
+            field_desc.setEnabled(true);
+            jComboBox1.setEnabled(false);
+            jComboBox2.setEnabled(false);
+            field_desc.setText(jTable1.getValueAt(row, 2).toString());
+        } else if (field_jenis.getText().equals("Obat")) {
+            field_desc.setEnabled(false);
+            field_ket.setEnabled(true);
+            jComboBox1.setEnabled(false);
+            jComboBox2.setEnabled(true);
+            field_desc.setText("");
+            jComboBox2.setSelectedItem(jTable1.getValueAt(row, 2).toString());
+        } else if (field_jenis.getText().equals("Tindakan")) {
+            field_desc.setEnabled(false);
+            field_ket.setEnabled(true);
+            jComboBox1.setEnabled(true);
+            field_desc.setText("");
+            jComboBox2.setEnabled(false);
+            jComboBox1.setSelectedItem(jTable1.getValueAt(row, 2).toString());
+        }
+        
+        if (jTable1.getValueAt(row, 4).toString().equals("Dihapus")) {
+            btn_update.setEnabled(false);
+        } else {
+            btn_update.setEnabled(true);
+        }
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void cbb_pera1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbb_pera1ActionPerformed
+        if (cbb_pera1.getSelectedIndex() == 0) {
+            prt1 = new Pekerja();
+            lbl_perawat1.setText("-");
+        } else {
+            String[] data = cbb_pera1.getSelectedItem().toString().split(", ");
+            int id = Integer.valueOf(data[0]);
+            prt1 = execPkj.getPekerja(id);
+            String[] sprt1 = prt1.getNama().split(" ");
+            lbl_perawat1.setText("1. " + sprt1[0] + " " + sprt1[1]);
+            set_cbbperaw2(id);
+        }
+        prt2 = new Pekerja();
+        lbl_perawat2.setText("-");
+    }//GEN-LAST:event_cbb_pera1ActionPerformed
+
+    private void cbb_pera2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbb_pera2ActionPerformed
+       if (cbb_pera2.getSelectedIndex() == 0) {
+            prt2 = new Pekerja();
+            lbl_perawat2.setText("-");
+        } else {
+            String[] data = cbb_pera2.getSelectedItem().toString().split(", ");
+            int id = Integer.valueOf(data[0]);
+            prt2 = execPkj.getPekerja(id);
+            String[] sprt1 = prt2.getNama().split(" ");
+            lbl_perawat2.setText("1. " + sprt1[0] + " " + sprt1[1]);
+        }
+    }//GEN-LAST:event_cbb_pera2ActionPerformed
+
+    private void btn_updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_updateActionPerformed
+        newRkm = selRkm;
+        newRkm.setKeterangan(field_ket.getText());
+        newRkm.setStatus("Ditambahkan");
+        
+        if (field_jenis.getText().equals("Diagnosis")) {
+            newRkm.setDeskripsi(field_desc.getText());            
+        } else if (field_jenis.getText().equals("Tindakan")) {
+            String[] pil = cbb_tindakan.getSelectedItem().toString().split(", ");
+            newRkm.setDeskripsi(pil[1]);
+        } else if (field_jenis.getText().equals("Obat")) {
+            String[] pil = cbb_obat.getSelectedItem().toString().split(", ");
+            newRkm.setDeskripsi(pil[1]);
+        }
+        
+        int hasil = execRkm.insertItemRekam(newRkm);
+        if (hasil == 1 ) {
+            selRkm.setStatus("Diubah");
+            int hasil2 = execRkm.updateItemRekam(selRkm);
+            if (hasil2 == 1) {
+                JOptionPane.showMessageDialog(rootPane, "Edit data berhasil!"); 
+                setDataRekam(newRkm.getPasien().getId_pasien());
+            }                         
+        } else  {
+            JOptionPane.showMessageDialog(rootPane, "Edit data gagal!");   
+        } 
+            
+        
+    }//GEN-LAST:event_btn_updateActionPerformed
+
+    private void btn_deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_deleteActionPerformed
+        selRkm.setStatus("Dihapus");
+            int hasil2 = execRkm.updateItemRekam(selRkm);
+            if (hasil2 == 1) {
+                JOptionPane.showMessageDialog(rootPane, "Hapus data berhasil!"); 
+                setDataRekam(selRkm.getPasien().getId_pasien());
+            }                         
+    }//GEN-LAST:event_btn_deleteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -847,20 +1176,29 @@ public class main_form extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel addition;
     private javax.swing.JLabel asuransi;
     private javax.swing.JLabel background_periksa;
     private javax.swing.JLabel bg_body1;
     private javax.swing.JLabel bg_header;
     private javax.swing.JPanel body;
+    private javax.swing.JButton btn_delete;
     private javax.swing.JButton btn_next;
+    private javax.swing.JLabel btn_rekam;
     private javax.swing.JButton btn_selesai;
     private javax.swing.JButton btn_selesai1;
-    private javax.swing.JButton btn_set;
+    private javax.swing.JButton btn_update;
     private javax.swing.JComboBox cbb_obat;
+    private javax.swing.JComboBox cbb_pasien;
+    private javax.swing.JComboBox cbb_pera1;
+    private javax.swing.JComboBox cbb_pera2;
     private javax.swing.JComboBox cbb_tindakan;
+    private javax.swing.JPanel edit_rekam;
+    private javax.swing.JTextArea field_desc;
+    private javax.swing.JTextField field_id;
     private javax.swing.JTextField field_idpasien;
-    private javax.swing.JTextField field_prwt1;
-    private javax.swing.JTextField field_prwt2;
+    private javax.swing.JTextField field_jenis;
+    private javax.swing.JTextArea field_ket;
     private javax.swing.JLabel gender;
     private javax.swing.JPanel header;
     private javax.swing.JLabel id;
@@ -868,14 +1206,27 @@ public class main_form extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JComboBox jComboBox1;
+    private javax.swing.JComboBox jComboBox2;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane7;
+    private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lbl_asuransi;
     private javax.swing.JLabel lbl_gender;
     private javax.swing.JLabel lbl_id;
