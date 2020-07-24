@@ -272,6 +272,7 @@ public class main_form extends javax.swing.JFrame {
         field_ket = new javax.swing.JTextArea();
         btn_update = new javax.swing.JButton();
         btn_delete = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -800,43 +801,43 @@ public class main_form extends javax.swing.JFrame {
 
         field_id.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
         field_id.setEnabled(false);
-        edit_rekam.add(field_id, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 380, 160, -1));
+        edit_rekam.add(field_id, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 380, 160, -1));
 
         jLabel2.setFont(new java.awt.Font("Consolas", 1, 20)); // NOI18N
         jLabel2.setText("ID");
-        edit_rekam.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 380, -1, 30));
+        edit_rekam.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 380, -1, 30));
 
         jComboBox1.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        edit_rekam.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 470, 280, -1));
+        edit_rekam.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 470, 280, -1));
 
         jLabel3.setFont(new java.awt.Font("Consolas", 1, 20)); // NOI18N
         jLabel3.setText("Deskripsi");
-        edit_rekam.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 470, -1, 30));
+        edit_rekam.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 470, -1, 30));
 
         jLabel4.setFont(new java.awt.Font("Consolas", 1, 20)); // NOI18N
         jLabel4.setText("Keterangan");
-        edit_rekam.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 610, -1, 30));
+        edit_rekam.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 610, -1, 30));
 
         field_jenis.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
         field_jenis.setEnabled(false);
-        edit_rekam.add(field_jenis, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 380, 160, -1));
+        edit_rekam.add(field_jenis, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 380, 160, -1));
 
         jLabel5.setFont(new java.awt.Font("Consolas", 1, 20)); // NOI18N
         jLabel5.setText("Tindakan");
-        edit_rekam.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 470, -1, 30));
+        edit_rekam.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 470, -1, 30));
 
         jLabel6.setFont(new java.awt.Font("Consolas", 1, 20)); // NOI18N
         jLabel6.setText("Jenis");
-        edit_rekam.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 380, -1, 30));
+        edit_rekam.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 380, -1, 30));
 
         jLabel7.setFont(new java.awt.Font("Consolas", 1, 20)); // NOI18N
         jLabel7.setText("Obat");
-        edit_rekam.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 570, -1, 30));
+        edit_rekam.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 570, -1, 30));
 
         jComboBox2.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        edit_rekam.add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 570, 280, -1));
+        edit_rekam.add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 570, 280, -1));
 
         field_desc.setColumns(20);
         field_desc.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
@@ -844,7 +845,7 @@ public class main_form extends javax.swing.JFrame {
         field_desc.setRows(3);
         jScrollPane7.setViewportView(field_desc);
 
-        edit_rekam.add(jScrollPane7, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 470, 270, 90));
+        edit_rekam.add(jScrollPane7, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 470, 270, 90));
 
         field_ket.setColumns(20);
         field_ket.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
@@ -852,7 +853,7 @@ public class main_form extends javax.swing.JFrame {
         field_ket.setRows(3);
         jScrollPane8.setViewportView(field_ket);
 
-        edit_rekam.add(jScrollPane8, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 610, 270, 90));
+        edit_rekam.add(jScrollPane8, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 610, 270, 90));
 
         btn_update.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/Component 13 – 2.png"))); // NOI18N
         btn_update.setBorder(null);
@@ -861,7 +862,7 @@ public class main_form extends javax.swing.JFrame {
                 btn_updateActionPerformed(evt);
             }
         });
-        edit_rekam.add(btn_update, new org.netbeans.lib.awtextra.AbsoluteConstraints(1090, 750, -1, -1));
+        edit_rekam.add(btn_update, new org.netbeans.lib.awtextra.AbsoluteConstraints(1110, 770, -1, -1));
 
         btn_delete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/Component 13 – 3.png"))); // NOI18N
         btn_delete.setBorder(null);
@@ -870,7 +871,10 @@ public class main_form extends javax.swing.JFrame {
                 btn_deleteActionPerformed(evt);
             }
         });
-        edit_rekam.add(btn_delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(1260, 750, -1, -1));
+        edit_rekam.add(btn_delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(1280, 770, -1, -1));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/bg.png"))); // NOI18N
+        edit_rekam.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1440, 850));
 
         addition.add(edit_rekam, "card2");
 
@@ -1039,7 +1043,6 @@ public class main_form extends javax.swing.JFrame {
         int row = jTable1.getSelectedRow();
         execRkm = new ExecuteRekamMedis();
         selRkm = execRkm.getItemRekam(Integer.valueOf(jTable1.getValueAt(row, 0).toString()));
-        System.out.println(selRkm.toString());
         field_id.setText(jTable1.getValueAt(row, 0).toString());
         field_ket.setText(jTable1.getValueAt(row, 3).toString());
         field_jenis.setText(jTable1.getValueAt(row, 1).toString());
@@ -1209,6 +1212,7 @@ public class main_form extends javax.swing.JFrame {
     private javax.swing.JButton jButton6;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JComboBox jComboBox2;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
